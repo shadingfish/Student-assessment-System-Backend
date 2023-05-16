@@ -2,10 +2,7 @@ package com.babybus.stu_eval.model;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Value;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -13,7 +10,7 @@ import java.util.Date;
 
 @Data
 @ApiModel(description = "记载学生竞赛状况")
-public class stu_comp extends Material{
+public class StuComp extends Material{
     private String comp_name;
     @Pattern(regexp = "[院级|校级|省级|国家级|国际级]$", message = "请输入合法等级：院级、校级、省级、国家级、国际级")
     private String level;

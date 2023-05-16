@@ -1,17 +1,13 @@
 package com.babybus.stu_eval.model;
 
 import lombok.Data;
-import oracle.jrockit.jfr.StringConstantPool;
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
-import java.math.BigInteger;
-import java.util.Date;
 
 @Data
-public class stu_sum {
+public class StuSum {
     private String perf_id;
     private String stu_id;
     @Length(min=9,max=9,message = "请输入正确的格式，例如：2022-2023")

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @ApiModel(description = "记载学生骨干服务情况")
-public class stu_service extends Material{
+public class StuCadre extends Material{
     private String depart;
     private String level;
     private String occupation;
