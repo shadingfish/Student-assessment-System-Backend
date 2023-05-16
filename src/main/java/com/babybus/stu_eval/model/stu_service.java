@@ -1,0 +1,17 @@
+package com.babybus.stu_eval.model;
+
+import lombok.Data;
+
+import javax.validation.constraints.Pattern;
+import java.util.Date;
+
+@Data
+public class stu_service {
+    private String depart;
+    private String level;
+    private String occupation;
+    @Pattern(regexp = "202[0-9]-[0|1][0-9]-[0-3][0-9]$", message = "请按照如下格式输入日期：YYYY-MM-DD")
+    private Date start_date;
+    @Pattern(regexp = "202[0-9]-[0|1][0-9]-[0-3][0-9]$", message = "请按照如下格式输入日期：YYYY-MM-DD")
+    private Date stop_date;
+}
