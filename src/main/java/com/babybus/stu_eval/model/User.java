@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 
 import java.util.Date;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -32,4 +33,19 @@ public class User {
         this.phone = phone;
         this.email = email;
     }
+
+    public User(){
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        this.user_id = 000000;
+        this.card_id = 000000;
+        this.chara = 1;
+        this.password = "000000";
+        this.status = 1;
+        this.birthday = date;
+        this.gender = 1;
+        this.phone = "000000";
+        this.email = "000000";
+    }
+
 }
