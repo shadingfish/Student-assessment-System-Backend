@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class Research extends Material{
-
+    private String output_name; //成果名称
 }
