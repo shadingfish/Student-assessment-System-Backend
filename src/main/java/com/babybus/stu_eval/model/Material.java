@@ -2,6 +2,8 @@ package com.babybus.stu_eval.model;
 import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -27,5 +29,19 @@ public class Material {
         this.file_url = file_url;
         this.submit_time = submit_time;
         this.eval_time = eval_time;
+    }
+
+    public Material(){
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        this.mat_id = 000000;
+        this.stu_id = 000000;
+        this.judge_id = 000000;
+        this.ac_year = 2022-2023;
+        this.eval_status = 1;
+        this.remark = "";
+        this.file_url = "";
+        this.submit_time = date;
+        this.eval_time = date;
     }
 }
