@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Data
 @ApiModel(description = "记载学生竞赛状况")
-public class stu_comp {
+public class stu_comp extends Material{
     private String comp_name;
     @Pattern(regexp = "[院级|校级|省级|国家级|国际级]$", message = "请输入合法等级：院级、校级、省级、国家级、国际级")
     private String level;
