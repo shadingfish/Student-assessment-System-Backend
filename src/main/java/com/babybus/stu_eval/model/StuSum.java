@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class StuSum {
-    private String perf_id;
+    private int perf_id;
     private String stu_id;
     @Length(min=9,max=9,message = "请输入正确的格式，例如：2022-2023")
     @Pattern(regexp = "202[0-9]-202[0-9]$", message = "请输入正确的格式，例如：2022-2023")
