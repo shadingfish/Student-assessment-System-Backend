@@ -5,7 +5,10 @@ import com.babybus.stu_eval.model.LoginReqVo;
 import com.babybus.stu_eval.model.LoginRespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -28,16 +31,4 @@ public class DemoServer {
         CommonResult<LoginRespVo> res = new CommonResult<>(loginRespVo);
         return res.success(loginRespVo);
     }
-
-    @PostMapping apping("/login-req")
-    public CommonResult<LoginRespVo> hello(@RequestBody @Valid LoginReqVo reqVo) {
-        LoginRespVo loginRespVo = new LoginRespVo();
-        loginRespVo.setAccessToken("foo");
-        loginRespVo.setRefreshToken("bar");
-
-        CommonResult<LoginRespVo> res = new CommonResult<>(loginRespVo);
-        return res.success(loginRespVo);
-    }
-
-
 }
