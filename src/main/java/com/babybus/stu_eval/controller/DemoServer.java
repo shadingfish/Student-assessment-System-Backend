@@ -1,8 +1,8 @@
 package com.babybus.stu_eval.controller;
 
 import com.babybus.stu_eval.model.CommonResult;
-import com.babybus.stu_eval.model.LoginReqVo;
-import com.babybus.stu_eval.model.LoginRespVo;
+import com.babybus.stu_eval.controller.vo.Demo.LoginReqVo;
+import com.babybus.stu_eval.controller.vo.Demo.RespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +23,12 @@ public class DemoServer {
     }
 
     @GetMapping("/login-req")
-    public CommonResult<LoginRespVo> hello(@RequestBody @Valid LoginReqVo reqVo) {
-        LoginRespVo loginRespVo = new LoginRespVo();
+    public CommonResult<RespVo> hello(@RequestBody @Valid LoginReqVo reqVo) {
+        RespVo loginRespVo = new RespVo();
         loginRespVo.setAccessToken("foo");
         loginRespVo.setRefreshToken("bar");
 
-        CommonResult<LoginRespVo> res = new CommonResult<>(loginRespVo);
+        CommonResult<RespVo> res = new CommonResult<>(loginRespVo);
         return res.success(loginRespVo);
     }
 }

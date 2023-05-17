@@ -2,7 +2,6 @@ package com.babybus.stu_eval.model;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import io.swagger.annotations.ApiModel;
 
 import java.util.Date;
 

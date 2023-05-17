@@ -1,4 +1,4 @@
-package com.babybus.stu_eval.model;
+package com.babybus.stu_eval.controller.vo.Demo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
