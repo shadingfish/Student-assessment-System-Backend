@@ -1,4 +1,4 @@
-package com.babybus.stu_eval.model.yudingyi;
+package com.babybus.stu_eval.model.Research;
 import com.babybus.stu_eval.model.Material;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

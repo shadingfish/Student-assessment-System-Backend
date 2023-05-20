@@ -7,11 +7,11 @@ import org.springframework.core.io.ResourceLoader;
 import java.io.IOException;
 
 @Data
-public class GetResource {
+public class ResourceController {
     private ResourceLoader resourceLoader;
     private String resourcesPath;
 
-    public GetResource(ResourceLoader resourceLoader) {
+    public ResourceController(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
         this.resourcesPath = getResourcesDirectory();
     }

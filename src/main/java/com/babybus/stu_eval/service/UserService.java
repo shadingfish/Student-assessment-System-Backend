@@ -2,17 +2,14 @@ package com.babybus.stu_eval.service;
 
 import com.babybus.stu_eval.mapper.UserMapper;
 import com.babybus.stu_eval.model.CommonResult;
+import com.babybus.stu_eval.model.Export.EvalResult;
 import com.babybus.stu_eval.model.User;
-import com.babybus.stu_eval.model.yudingyi.CheckResearch;
-import com.babybus.stu_eval.model.yudingyi.Research;
-import com.babybus.stu_eval.model.yudingyi.ReturnResearch;
-import org.apache.ibatis.annotations.Param;
+import com.babybus.stu_eval.model.Research.CheckResearch;
+import com.babybus.stu_eval.model.Research.Research;
+import com.babybus.stu_eval.model.Research.ReturnResearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,5 +45,9 @@ public class UserService {
 
     public int giveResearchScore(int stu_id, int research_score){
         return  userMapper.giveResearchScore(stu_id, research_score);
+    };
+
+    public List<EvalResult> exportTable(String table_name){
+        return  userMapper.exportTable(table_name);
     };
 }

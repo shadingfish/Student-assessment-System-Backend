@@ -1,12 +1,6 @@
-package com.babybus.stu_eval.model.yudingyi;
-import com.babybus.stu_eval.model.Material;
+package com.babybus.stu_eval.model.Research;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
 
 @Data
 @ApiModel(description = "科研材料检索返回类型")

@@ -6,6 +6,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.apache.commons.net.ftp.FTPReply;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -15,6 +16,10 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +33,19 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/file")
 public class FileController {
+    public ResponseEntity<byte[]> downloadFile() throws IOException {
+        // Read the file content into a byte array
+        File file = new File("/path/to/file.xlsx");
+        byte[] fileContent = Files.readAllBytes(file.toPath());
+
+        // Set the response headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", file.getName());
+
+        // Create the ResponseEntity with the file content and headers
+        return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+    }
 
     @Autowired
     private UserService userService;

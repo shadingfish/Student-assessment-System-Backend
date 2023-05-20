@@ -19,13 +19,13 @@
         </foreach>
      </insert>
 
-    <select id="checkResearch" resultType="com.babybus.stu_eval.model.yudingyi.CheckResearch">
+    <select id="checkResearch" resultType="com.babybus.stu_eval.model.Research.CheckResearch">
         SELECT e.stu_id, e.ac_year, e.scholarship, e.research_score, s.card_id, s.name, s.school, s.grade, s.major
         FROM eval_result e
         JOIN student s ON e.stu_id = s.user_id
     </select>
 
-    <select id="getResearchList" parameterType="int" resultType="com.babybus.stu_eval.model.yudingyi.ReturnResearch">
+    <select id="getResearchList" parameterType="int" resultType="com.babybus.stu_eval.model.Research.ReturnResearch">
         SELECT mat_id, output_name, output_type, category, ranking, level, DATE_FORMAT(output_time, '%Y-%m-%d') AS output_time, DATE_FORMAT(submit_time, '%Y-%m-%d') AS submit_time, eval_status, file_url FROM research_achievement WHERE stu_id = #{stu_id}
     </select>
 
@@ -34,4 +34,8 @@
         SET research_score = #{research_score}
         WHERE stu_id = #{stu_id}
     </update>
+
+    <select id="exportTable" parameterType="java.lang.String" resultType="com.babybus.stu_eval.model.Export.EvalResult">
+        SELECT * FROM ${table_name}
+    </select>
 </mapper>
