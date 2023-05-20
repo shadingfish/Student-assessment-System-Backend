@@ -5,17 +5,25 @@ import com.babybus.stu_eval.controller.vo.Demo.LoginReqVo;
 import com.babybus.stu_eval.controller.vo.Demo.RespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Api(tags = "演示接口")
 @RestController
 @RequestMapping("/my-api/demo")
 public class DemoServer {
+    private ResourceLoader resourceLoader;
+    public DemoServer(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
     @ApiOperation("Hello World接口")
     @GetMapping("/hello")
     public String hello() {
@@ -31,4 +39,25 @@ public class DemoServer {
         CommonResult<RespVo> res = new CommonResult<>(loginRespVo);
         return res.success(loginRespVo);
     }
+
+    @GetMapping("/test")
+    public String demo(){
+//        GetResource getResource = new GetResource(resourceLoader);
+//        String resourcesPath = getResource.getResourcesPath();
+//        System.out.println(resourcesPath);
+        // Get the current working directory
+        String currentWorkingDir = System.getProperty("user.dir");
+        // Define the relative path to the desired directory
+        String relativePath = "src/main/resources/static";
+        // Create the absolute path by combining the current working directory and the relative path
+        Path absolutePath = Paths.get(currentWorkingDir, relativePath);
+        // Convert the absolute path to a string
+        String absolutePathString = absolutePath.toString();
+        // Use the absolute path as needed
+        System.out.println(absolutePathString);
+
+        return "完成";
+    }
+
+
 }

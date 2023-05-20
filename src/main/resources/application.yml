@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/stu_eval
+    #url: jdbc:mysql://43.142.90.238:3306/agilesoftware
+    url: jdbc:mysql://localhost:3306/agilesoftware
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver

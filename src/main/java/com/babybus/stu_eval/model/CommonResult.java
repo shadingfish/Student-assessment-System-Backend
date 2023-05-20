@@ -16,7 +16,6 @@ public class CommonResult<T> {
         CommonResult<?> res = new CommonResult<>(null);
         res.code = code;
         res.message = msg;
-
         return res;
     }
 

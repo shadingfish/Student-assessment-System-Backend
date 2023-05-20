@@ -11,5 +11,27 @@
         WHERE username = #{username} AND password = #{password}
     </select>
 
+    <insert id="storeResReq" parameterType="java.util.List">
+        INSERT INTO research_achievement (stu_id, ac_year, output_name, output_type, category, ranking, level, output_time, file_url)
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+            (#{item.stu_id}, #{item.ac_year}, #{item.output_name}, #{item.output_type}, #{item.category}, #{item.ranking}, #{item.level}, #{item.output_time}, #{item.file_url})
+        </foreach>
+     </insert>
 
+    <select id="checkResearch" resultType="com.babybus.stu_eval.model.yudingyi.CheckResearch">
+        SELECT e.stu_id, e.ac_year, e.scholarship, e.research_score, s.card_id, s.name, s.school, s.grade, s.major
+        FROM eval_result e
+        JOIN student s ON e.stu_id = s.user_id
+    </select>
+
+    <select id="getResearchList" parameterType="int" resultType="com.babybus.stu_eval.model.yudingyi.ReturnResearch">
+        SELECT mat_id, output_name, output_type, category, ranking, level, DATE_FORMAT(output_time, '%Y-%m-%d') AS output_time, DATE_FORMAT(submit_time, '%Y-%m-%d') AS submit_time, eval_status, file_url FROM research_achievement WHERE stu_id = #{stu_id}
+    </select>
+
+    <update id="giveResearchScore" parameterType="int">
+        UPDATE eval_result
+        SET research_score = #{research_score}
+        WHERE stu_id = #{stu_id}
+    </update>
 </mapper>

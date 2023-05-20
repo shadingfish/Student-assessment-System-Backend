@@ -2,13 +2,20 @@ package com.babybus.stu_eval.controller;
 
 import com.babybus.stu_eval.controller.vo.Demo.RespVo;
 import com.babybus.stu_eval.controller.vo.Research.ResearchReqVo;
+import com.babybus.stu_eval.controller.vo.Research.domain;
 import com.babybus.stu_eval.model.CommonResult;
+import com.babybus.stu_eval.model.yudingyi.CheckResearch;
+import com.babybus.stu_eval.model.yudingyi.Research;
+import com.babybus.stu_eval.model.yudingyi.ReturnResearch;
 import com.babybus.stu_eval.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = "科研成果演示接口")
@@ -18,14 +25,56 @@ public class ResearchController {
     private UserService userService;
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/postResearch")
-    public CommonResult<RespVo> checkLogin(@RequestBody @Valid ResearchReqVo researchReqVo){
+    public CommonResult<RespVo> postResearch(@RequestBody @Valid ResearchReqVo researchReqVo){
         System.out.println(researchReqVo);
 
+        //public Research(int stu_id, String ac_year, String file_url, String output_name, int output_type, String category, int ranking, int level, Date output_time)
+
+        List<Research> data = new ArrayList<>();
+        for (domain domain : researchReqVo.getDomains()) {
+            data.add(new Research(Integer.parseInt(researchReqVo.getUID()), researchReqVo.getAc_year(), domain.getFileList()[0].url, domain.output_name, domain.output_type, domain.category, domain.ranking, domain.level, domain.output_time));
+        }
+
+        System.out.println(data);
+        int num = userService.storeResReq(data);
+
+        System.out.println("共插入了" + num + "条科研记录。");
 
         RespVo researchRespVo = new RespVo();
-        researchRespVo.setAccessToken("post research");
-        researchRespVo.setRefreshToken("post research");
+        researchRespVo.setAccessToken("yudingyi123");
+        researchRespVo.setRefreshToken("yudingyi321");
+
         CommonResult<RespVo> res = new CommonResult<>(researchRespVo);
         return res.success(researchRespVo);
     };
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/checkResearch")
+    public List<CheckResearch> checkResearch(){
+        List<CheckResearch> list = userService.checkResearch();
+        System.out.println(list);
+        return list;
+    };
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/getResearchList")
+    public List<ReturnResearch> getResearchList(@RequestParam @Valid int stu_id){
+        return  userService.getResearchList(stu_id);
+    };
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/giveResearchScore")
+    public CommonResult<String> giveResearchScore(@RequestBody int[] judge){
+        System.out.println(Arrays.toString(judge));
+        String resp = "共更新了" + userService.giveResearchScore(judge[0], judge[1]) + "条数据。";
+        System.out.println(resp);
+        CommonResult<String> res = new CommonResult<>(resp);
+        return  res.success(resp);
+    };
+
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+//    @PostMapping("/checkResearch")
+//    public List<CheckResearch> checkResearch(@RequestParam @Valid String UID){
+//        return  userService.checkResearch(UID);
+//    };
 }
