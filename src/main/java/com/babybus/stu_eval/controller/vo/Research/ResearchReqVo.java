@@ -1,4 +1,6 @@
 package com.babybus.stu_eval.controller.vo.Research;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,15 +45,12 @@ public class ResearchReqVo {
     @ApiModelProperty(value = "成果列表", required = true)
     private domain[] domains;
 
-    public ResearchReqVo(String UID, String ac_year, domain[] domains) {
+    @JsonCreator
+    public ResearchReqVo(@JsonProperty("UID") String UID,
+                         @JsonProperty("ac_year") String ac_year,
+                         @JsonProperty("domains") domain[] domains) {
         this.UID = UID;
         this.ac_year = ac_year;
         this.domains = domains;
-    }
-
-    public ResearchReqVo() {
-        this.UID = "1000";
-        this.ac_year = "ac_year";
-        this.domains = new domain[]{new domain(), new domain()};
     }
 }

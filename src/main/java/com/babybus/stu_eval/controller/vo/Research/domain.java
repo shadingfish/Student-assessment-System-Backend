@@ -8,8 +8,7 @@ import java.util.Date;
 
 @Data
 @ApiModel(description = "研究记录提交请求.成果列表")
-public
-class domain {
+public class domain {
     public String key;
     @ApiModelProperty(value = "产出类型", required = true,example = "我的论文")
     public String output_name;

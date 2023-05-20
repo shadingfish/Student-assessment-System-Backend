@@ -39,7 +39,7 @@ public class ResearchController {
             int num = userService.storeResReq(data);
 
             System.out.println("共插入了" + num + "条科研记录。");
-        }catch (Exception e){
+        } catch (Exception e ){
             System.out.println("后端上传错误：" + e.getMessage());
             return CommonResult.error(500, "后端上传错误");
         }
@@ -73,7 +73,7 @@ public class ResearchController {
         try{System.out.println(Arrays.toString(judge));
             String resp = "共更新了" + userService.giveResearchScore(judge[0], judge[1]) + "条数据。";
             System.out.println(resp);
-        }catch (Exception e){
+        } catch (Exception e){
             System.out.println("后端打分错误：" + e.getMessage());
             return CommonResult.error(500, "后端打分错误");
         }
