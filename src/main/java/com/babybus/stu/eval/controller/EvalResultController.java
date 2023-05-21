@@ -24,7 +24,7 @@ public class EvalResultController {
             // 将用户信息保存到数据库
             Integer affected = evalResultService.insertEvalResult(evalResult);
             if (affected == 0) {
-                return CommonResult.error(500,"插入失败");
+                return CommonResult.error(200,"插入失败");
             }
             return CommonResult.success(null, "插入成功");
         } catch (Exception e) {

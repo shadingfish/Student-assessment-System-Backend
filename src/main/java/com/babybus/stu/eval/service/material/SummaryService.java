@@ -15,16 +15,16 @@ public class SummaryService {
     public Integer insertSummary(Summary summary) {
         return summaryMapper.insertSummary(summary);
     }
-    public Summary getSummary(Integer stuId, String acYear) {
-        return summaryMapper.getSummary(stuId, acYear);
-    }
     public List<Summary> getSummaryList(Integer stuId) {
         return summaryMapper.getSummaryList(stuId);
+    }
+    public Summary getSummaryById(Integer matId) {
+        return summaryMapper.getSummaryById(matId);
     }
     public Integer updateSummary(Summary summary) {
         return summaryMapper.updateSummary(summary);
     }
-    public Integer deleteSummary(Integer stuId, String acYear) {
-        return summaryMapper.deleteSummary(stuId, acYear);
+    public Integer deleteSummaryById(Integer matId) {
+        return summaryMapper.deleteSummaryById(matId);
     }
 }

@@ -50,7 +50,11 @@ public class StudentController {
     public CommonResult<?> getStudentById(@RequestParam Integer userId) {
         try {
             Student student = studentService.getStudentById(userId);
-            return CommonResult.success(student, "获取成功");
+            if (student != null) {
+                return CommonResult.success(student, "获取成功");
+            } else {
+                return CommonResult.error(200,"找不到该记录");
+            }
         } catch (Exception e) {
             System.out.println(e);
             return CommonResult.error(500,"获取失败");
@@ -62,7 +66,11 @@ public class StudentController {
     public CommonResult<?> getStudentByCardId(@RequestParam String cardId) {
         try {
             Student student = studentService.getStudentByCardId(cardId);
-            return CommonResult.success(student, "获取成功");
+            if (student != null) {
+                return CommonResult.success(student, "获取成功");
+            } else {
+                return CommonResult.error(200,"找不到该记录");
+            }
         } catch (Exception e) {
             System.out.println(e);
             return CommonResult.error(500,"获取失败");

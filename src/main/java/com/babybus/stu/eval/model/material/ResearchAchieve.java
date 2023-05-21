@@ -1,9 +1,14 @@
 package com.babybus.stu.eval.model.material;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 // 科研成果类
-public class ResAchieve extends Material {
+public class ResearchAchieve extends Material {
     String outputName; // 成果名称
 //    OutputType outputType;
     String outputType; // 成果类型
@@ -11,6 +16,10 @@ public class ResAchieve extends Material {
 //    Level ranking;
     String ranking; // 成果等级
     Date outputTime; // 产出时间
+
+    ResearchAchieve() {
+        matType = "科研成果";
+    }
 
     // 成果类型枚举类
     enum OutputType {
