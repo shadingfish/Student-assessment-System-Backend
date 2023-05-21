@@ -1,8 +1,9 @@
 package com.babybus.stu_eval.controller;
 
 import com.babybus.stu_eval.controller.vo.Demo.RespVo;
+import com.babybus.stu_eval.controller.vo.Research.File;
 import com.babybus.stu_eval.controller.vo.Research.ResearchReqVo;
-import com.babybus.stu_eval.controller.vo.Research.domain;
+import com.babybus.stu_eval.controller.vo.Research.Domain;
 import com.babybus.stu_eval.model.CommonResult;
 import com.babybus.stu_eval.model.Research.CheckResearch;
 import com.babybus.stu_eval.model.Research.Research;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Api(tags = "科研成果演示接口")
@@ -27,12 +29,13 @@ public class ResearchController {
     public CommonResult<?> postResearch(@RequestBody @Valid ResearchReqVo researchReqVo){
         System.out.println(researchReqVo);
 
-        //public Research(int stu_id, String ac_year, String file_url, String output_name, int output_type, String category, int ranking, int level, Date output_time)
+        //public Research(int stu_id, String ac_
+        // year, String file_url, String output_name, int output_type, String category, int ranking, int level, Date output_time)
 
         try{
             List<Research> data = new ArrayList<>();
-            for (domain domain : researchReqVo.getDomains()) {
-                data.add(new Research(Integer.parseInt(researchReqVo.getUID()), researchReqVo.getAc_year(), domain.getFileList()[0].url, domain.output_name, domain.output_type, domain.category, domain.ranking, domain.level, domain.output_time));
+            for (Domain domain : researchReqVo.getDomains()) {
+                data.add(new Research(Integer.parseInt(researchReqVo.getUID()), researchReqVo.getAc_year(), domain.getFileList()[0].name, domain.getFileList()[0].url, domain.output_name, domain.output_type, domain.category, domain.ranking, domain.level, domain.output_time));
             }
 
             System.out.println(data);
@@ -67,6 +70,33 @@ public class ResearchController {
     };
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/deleteMaterial")
+    public String deleteResearch(@RequestParam @Valid int mat_id){
+
+        return  "共删除了" + userService.deleteResearch(mat_id) + "条记录。";
+    };
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/retrieveResearch")
+    //ResearchReqVo
+    public ResearchReqVo retrieveResearch(@RequestParam @Valid int stu_id){
+        List<Research> res_list = userService.retrieveResearch(stu_id);
+        ArrayList<Domain> domainList = new ArrayList<>();
+        for (Research research : res_list) {
+            File temp = new File(research.name, research.file_url);
+            File[] file = {temp};
+            Domain domain = new Domain(String.valueOf(research.mat_id), research.output_name, research.output_type, research.category, research.ranking, research.level, research.output_time, file);
+            domainList.add(domain);
+        }
+
+        ResearchReqVo researchReqVo = new ResearchReqVo(String.valueOf(res_list.get(0).stu_id), res_list.get(0).ac_year, domainList.toArray(new Domain[domainList.size()]));
+
+        System.out.println("恢复完成：");
+        System.out.println(researchReqVo);
+        return researchReqVo;
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/giveResearchScore")
     public CommonResult<?> giveResearchScore(@RequestBody int[] judge){
 
@@ -85,6 +115,8 @@ public class ResearchController {
         CommonResult<RespVo> res = new CommonResult<>(researchRespVo);
         return res.success(researchRespVo);
     };
+
+
 
 //    @CrossOrigin(origins = "*", allowedHeaders = "*")
 //    @PostMapping("/checkResearch")

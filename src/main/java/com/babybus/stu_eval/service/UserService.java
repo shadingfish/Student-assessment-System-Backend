@@ -47,6 +47,14 @@ public class UserService {
         return  userMapper.giveResearchScore(stu_id, research_score);
     };
 
+    public int deleteResearch(int mat_id){
+        return  userMapper.deleteResearch(mat_id);
+    };
+
+    public List<Research> retrieveResearch(int stu_id){
+        return  userMapper.retrieveResearch(stu_id);
+    };
+
     public List<EvalResult> exportTable(String table_name){
         return  userMapper.exportTable(table_name);
     };
