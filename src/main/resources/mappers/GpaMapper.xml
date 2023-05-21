@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.stu.eval.mapper.material.GpaMapper">
+    <resultMap id="gpaResultMap" type="com.babybus.stu.eval.model.material.Gpa">
+        <result column="gpa_id" property="gpaId" />
+        <result column="stu_id" property="stuId" />
+        <result column="ac_year" property="acYear" />
+        <result column="gpa" property="gpa" />
+        <result column="ranking" property="ranking" />
+        <result column="base" property="base" />
+        <result column="confirm_status" property="confirmStatus" />
+        <result column="confirm_time" property="confirmTime" />
+    </resultMap>
+
+    <insert id="insertGpa" parameterType="com.babybus.stu.eval.model.material.Gpa">
+        <selectKey keyProperty="gpaId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO gpa (gpa_id, stu_id, ac_year, gpa, ranking, base, confirm_status, confirm_time)
+        VALUES (#{gpaId}, #{stuId}, #{acYear}, #{gpa}, #{ranking}, #{base}, #{confirmStatus}, #{confirmTime})
+    </insert>
+
+    <select id="getGpaById" resultType="com.babybus.stu.eval.model.material.Gpa" resultMap="gpaResultMap">
+        SELECT * FROM gpa WHERE gpa_id = #{gpaId}
+    </select>
+
+    <select id="getGpaList" resultType="com.babybus.stu.eval.model.material.Gpa" resultMap="gpaResultMap">
+        SELECT * FROM gpa WHERE stu_id = #{stuId}
+    </select>
+
+    <update id="updateGpa" parameterType="com.babybus.stu.eval.model.material.Gpa">
+        UPDATE gpa
+        SET gpa = #{gpa},
+            ranking = #{ranking},
+            base = #{base},
+            confirm_status = #{confirmStatus},
+            confirm_time = #{confirmTime}
+        WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+    </update>
+
+    <delete id="deleteGpaById">
+        DELETE FROM gpa WHERE gpa_id = #{gpaId}
+    </delete>
+</mapper>

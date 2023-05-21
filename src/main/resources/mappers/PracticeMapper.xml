@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.stu.eval.mapper.material.PracticeMapper">
+    <resultMap id="practiceResultMap" type="com.babybus.stu.eval.model.material.Practice" extends="materialResultMap">
+        <result property="pracType" column="prac_type"/>
+        <result property="startDate" column="start_date" javaType="java.util.Date"/>
+        <result property="endDate" column="end_date" javaType="java.util.Date"/>
+    </resultMap>
+    <resultMap id="materialResultMap" type="com.babybus.stu.eval.model.material.Material">
+        <result column="mat_id" property="matId" />
+        <result column="stu_id" property="stuId" />
+        <result column="judge_id" property="judgeId" />
+        <result column="ac_year" property="acYear" />
+        <result column="mat_type" property="matType" />
+        <result column="eval_status" property="evalStatus" />
+        <result column="remark" property="remark" />
+        <result column="file_url" property="fileUrl" />
+        <result column="submit_time" property="submitTime" />
+        <result column="eval_time" property="evalTime" />
+    </resultMap>
+    
+    <insert id="insertPractice" parameterType="com.babybus.stu.eval.model.material.Practice">
+        <selectKey keyProperty="matId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO practice (stu_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
+            prac_type, start_date, end_date)
+        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, #{submitTime}, #{evalTime},
+            #{pracType}, #{startDate}, #{endDate})
+    </insert>
+
+    <select id="getPracticeById" resultType="com.babybus.stu.eval.model.material.Practice" resultMap="practiceResultMap">
+        SELECT * FROM practice WHERE mat_id = #{matId}
+    </select>
+
+    <select id="getPracticeList" resultType="com.babybus.stu.eval.model.material.Practice" resultMap="practiceResultMap">
+        SELECT * FROM practice WHERE stu_id = #{stuId}
+    </select>
+
+    <update id="updatePractice" parameterType="com.babybus.stu.eval.model.material.Practice">
+        UPDATE practice
+        SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear}, mat_type = #{matType},
+            eval_status = #{evalStatus}, remark = #{remark}, file_url = #{fileUrl}, submit_time = #{submitTime}, eval_time = #{evalTime},
+            prac_type = #{pracType}, start_date = #{startDate}, end_date = #{endDate}
+        WHERE mat_id = #{matId}
+    </update>
+
+    <delete id="deletePracticeById">
+        DELETE FROM practice WHERE mat_id = #{matId}
+    </delete>
+</mapper>

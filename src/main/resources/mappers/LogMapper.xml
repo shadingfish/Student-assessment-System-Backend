@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.stu.eval.mapper.LogMapper">
+    <resultMap id="logResultMap" type="com.babybus.stu.eval.model.common.Log">
+        <id property="logId" column="user_id" />
+        <result property="userId" column="user_id" />
+        <result property="createTime" column="create_time" />
+        <result property="logType" column="log_type" />
+        <result property="level" column="level" />
+        <result property="content" column="content" />
+    </resultMap>
+
+    <insert id="insertLog" parameterType="com.babybus.stu.eval.model.common.Log">
+        <selectKey keyProperty="logId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO log (user_id, create_time, type, level, content)
+        VALUES (#{userId}, #{createTime}, #{type}, #{level}, #{content})
+    </insert>
+
+    <select id="getLogList" resultType="com.babybus.stu.eval.model.common.Log" resultMap="logResultMap">
+        SELECT *
+        FROM log
+    </select>
+
+    <select id="getLogById" resultType="com.babybus.stu.eval.model.common.Log" resultMap="logResultMap">
+        SELECT *
+        FROM log
+        WHERE user_id = #{logId}
+    </select>
+
+    <update id="updateLog" parameterType="com.babybus.stu.eval.model.common.Log">
+        UPDATE log
+        SET user_id = #{userId},
+            create_time = #{createTime},
+            type = #{type},
+            level = #{level},
+            content = #{content}
+        WHERE user_id = #{logId}
+    </update>
+
+    <delete id="deleteLogById">
+        DELETE
+        FROM log
+        WHERE user_id = #{logId}
+    </delete>
+</mapper>
