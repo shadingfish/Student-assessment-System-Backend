@@ -1,5 +1,6 @@
 package com.babybus.stu_eval.mapper;
 
+import com.babybus.stu_eval.model.Export.AllEvalView;
 import com.babybus.stu_eval.model.Export.EvalResult;
 import com.babybus.stu_eval.model.User;
 import com.babybus.stu_eval.model.Research.CheckResearch;
@@ -23,4 +24,5 @@ public interface UserMapper {
     int deleteResearch(@Param("mat_id") int mat_id);
     List<Research> retrieveResearch(@Param("stu_id") int stu_id);
     List<EvalResult> exportTable(@Param("table_name") String table_name);
+    List<AllEvalView> exportView();
 }

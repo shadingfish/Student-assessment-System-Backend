@@ -3,7 +3,9 @@ package com.babybus.stu_eval.controller;
 import com.alibaba.excel.EasyExcel;
 import com.babybus.stu_eval.controller.vo.Demo.RespVo;
 import com.babybus.stu_eval.model.CommonResult;
+import com.babybus.stu_eval.model.Export.AllEvalView;
 import com.babybus.stu_eval.model.Export.EvalResult;
+import com.babybus.stu_eval.model.Research.CheckResearch;
 import com.babybus.stu_eval.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +78,13 @@ public class ExportController {
             // Return an error response if something goes wrong
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping ("/view")
+    public List<AllEvalView> exportView(){
+        List<AllEvalView> list = userService.exportView();
+        System.out.println(list);
+        return list;
     }
 }

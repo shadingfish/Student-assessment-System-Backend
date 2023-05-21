@@ -2,6 +2,7 @@ package com.babybus.stu_eval.service;
 
 import com.babybus.stu_eval.mapper.UserMapper;
 import com.babybus.stu_eval.model.CommonResult;
+import com.babybus.stu_eval.model.Export.AllEvalView;
 import com.babybus.stu_eval.model.Export.EvalResult;
 import com.babybus.stu_eval.model.User;
 import com.babybus.stu_eval.model.Research.CheckResearch;
@@ -58,4 +59,8 @@ public class UserService {
     public List<EvalResult> exportTable(String table_name){
         return  userMapper.exportTable(table_name);
     };
+
+    public List<AllEvalView> exportView(){
+        return userMapper.exportView();
+    }
 }

@@ -25,6 +25,14 @@
         JOIN student s ON e.card_id = s.card_id
     </select>
 
+    <select id="exportView" resultType="com.babybus.stu_eval.model.Export.AllEvalView">
+        SELECT e.eval_status, e.gpa_score, e.report_score, e.volun_score, e.occup_score,
+               e.research_score, e.award_score, e.practice_score, e.final_score,
+               s.card_id, s.name, s.grade, s.major
+        FROM eval_result e
+                 JOIN student s ON e.card_id = s.card_id
+    </select>
+
     <select id="getResearchList" parameterType="int" resultType="com.babybus.stu_eval.model.Research.ReturnResearch">
         SELECT mat_id, output_name, output_type, category, ranking, level, DATE_FORMAT(output_time, '%Y-%m-%d') AS output_time, DATE_FORMAT(submit_time, '%Y-%m-%d') AS submit_time, eval_status, file_url FROM research_achievement WHERE stu_id = #{stu_id}
     </select>
