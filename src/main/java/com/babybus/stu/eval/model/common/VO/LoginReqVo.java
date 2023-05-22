@@ -1,5 +1,5 @@
-package com.babybus.stu.eval.model.common.VO;
 
+package com.babybus.stu.eval.model.common.VO;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -2,10 +2,6 @@ package com.babybus.stu.eval.controller.yudingyi;
 
 
 import com.babybus.stu.eval.model.common.CommonResult;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPConnectionClosedException;
-import org.apache.commons.net.ftp.FTPReply;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,7 +23,7 @@ import java.io.*;
 @Api(tags = "文件上传处理接口")
 @RestController
 @RequestMapping("/file")
-public class FileController {
+public class LocalFileController {
     public ResponseEntity<byte[]> downloadFile() throws IOException {
         // Read the file content into a byte array
         File file = new File("/path/to/file.xlsx");

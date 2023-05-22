@@ -1,6 +1,5 @@
+
 package com.babybus.stu.eval.model.common.VO;
-
-
 import lombok.Data;
 
 @Data
