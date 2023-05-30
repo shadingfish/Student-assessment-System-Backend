@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.common.mapper.material.OccupationMapper">
+    <resultMap id="occupationResultMap" type="com.babybus.common.model.material.Occupation" extends="materialResultMap">
+        <result property="depart" column="depart"/>
+        <result property="level" column="level"/>
+        <result property="occupation" column="occupation"/>
+        <result property="startDate" column="start_date" javaType="java.util.Date"/>
+        <result property="endDate" column="end_date" javaType="java.util.Date"/>
+    </resultMap>
+    <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
+        <result column="mat_id" property="matId" />
+        <result column="stu_id" property="stuId" />
+        <result column="judge_id" property="judgeId" />
+        <result column="ac_year" property="acYear" />
+        <result column="mat_type" property="matType" />
+        <result column="eval_status" property="evalStatus" />
+        <result column="remark" property="remark" />
+        <result column="file_url" property="fileUrl" />
+        <result column="submit_time" property="submitTime" />
+        <result column="eval_time" property="evalTime" />
+    </resultMap>
+    
+    <insert id="insertOccupation" parameterType="com.babybus.common.model.material.Occupation">
+        <selectKey keyProperty="matId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO occupation (stu_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
+            depart, level, occupation, start_date, end_date)
+        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, #{submitTime}, #{evalTime},
+            #{depart}, #{level}, #{occupation}, #{startDate}, #{endDate})
+    </insert>
+
+    <select id="getOccupationById" resultType="com.babybus.common.model.material.Occupation" resultMap="occupationResultMap">
+        SELECT * FROM occupation WHERE mat_id = #{matId}
+    </select>
+
+    <select id="getOccupationList" resultType="com.babybus.common.model.material.Occupation" resultMap="occupationResultMap">
+        SELECT * FROM occupation WHERE stu_id = #{stuId}
+    </select>
+
+    <update id="updateOccupation" parameterType="com.babybus.common.model.material.Occupation">
+        UPDATE occupation
+        SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear}, mat_type = #{matType},
+            eval_status = #{evalStatus}, remark = #{remark}, file_url = #{fileUrl}, submit_time = #{submitTime}, eval_time = #{evalTime},
+            depart = #{depart}, level = #{level}, occupation = #{occupation}, start_date = #{startDate}, end_date = #{endDate}
+        WHERE mat_id = #{matId}
+    </update>
+
+    <delete id="deleteOccupationById">
+        DELETE FROM occupation WHERE mat_id = #{matId}
+    </delete>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.common.mapper.EvalRecordMapper">
+    <resultMap id="evalRecordMap" type="com.babybus.common.model.EvalRecord">
+        <id property="id" column="id" />
+        <result property="stuId" column="stu_id" />
+        <result property="judgeId" column="judge_id" />
+        <result property="acYear" column="ac_year" />
+        <result property="type" column="type" />
+        <result property="evalStatus" column="eval_status" />
+        <result property="score" column="score" />
+        <result property="evalTime" column="eval_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <insert id="insertEvalRecord" parameterType="com.babybus.common.model.EvalRecord">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO eval_records (stu_id, ac_year, type, eval_time)
+        VALUES (#{stuId}, #{acYear}, #{type}, NULL)
+    </insert>
+
+    <select id="getEvalRecordList" resultType="com.babybus.common.model.EvalRecord">
+        SELECT stu_id, judge_id, ac_year, type, eval_status, score, eval_time, remark
+        FROM eval_records
+        WHERE type = #{type}, judge_id = #{judgeId}, ac_year = #{acYear}
+    </select>
+</mapper>

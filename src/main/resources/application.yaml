@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/stu_eval
+    username: babybus
+    password: agiledev
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 20235
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml

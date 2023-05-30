@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.wangdy55.mapper.SummaryMapper">
+    <resultMap id="summaryResultMap" type="com.babybus.wangdy55.model.Summary" extends="materialResultMap">
+        <result column="politic_sum" property="politicSum"/>
+        <result column="behave_sum" property="behaveSum"/>
+        <result column="study_sum" property="studySum"/>
+        <result column="health_sum" property="healthSum"/>
+    </resultMap>
+    <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
+        <id column="id" property="id" />
+        <result column="stu_id" property="stuId" />
+        <result column="ac_year" property="acYear" />
+        <result column="file_url" property="fileUrl" />
+        <result column="submit_time" property="submitTime" />
+    </resultMap>
+
+    <insert id="insertSummary" parameterType="com.babybus.wangdy55.model.Summary">
+        <!-- Set the generated keys to the id property -->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO summaries (
+            stu_id, ac_year, file_url,
+            politic_sum, behave_sum, study_sum, health_sum)
+        VALUES (#{stuId}, #{acYear}, #{fileUrl},
+            #{politicSum}, #{behaveSum}, #{studySum}, #{healthSum})
+    </insert>
+
+    <select id="getSummaryById" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
+        SELECT * FROM summaries WHERE stu_id = #{stuId}
+    </select>
+
+    <select id="getSummary" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
+        SELECT * FROM summaries WHERE stu_id = #{id} AND ac_year = #{acYear}
+    </select>
+
+    <select id="getSummaryList" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
+        SELECT * FROM summaries WHERE stu_id = #{stuId}
+    </select>
+
+    <update id="updateSummary" parameterType="com.babybus.wangdy55.model.Summary">
+        UPDATE summaries
+        SET file_url = #{fileUrl},
+            politic_sum = #{politicSum}, behave_sum = #{behaveSum}, study_sum = #{studySum}, health_sum = #{healthSum}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSummaryById" parameterType="int">
+        DELETE FROM summaries WHERE id = #{id}
+    </delete>
+</mapper>
