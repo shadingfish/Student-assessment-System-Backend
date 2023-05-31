@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.wangdy55.mapper.MenuMapper">
+    <resultMap id="menuResultMap" type="com.babybus.wangdy55.model.Menu">
+        <result column="path" property="path" />
+        <result column="name" property="name" />
+        <result column="component" property="component" />
+    </resultMap>
+
+    <select id="getMenuList" resultType="com.babybus.wangdy55.model.Menu" resultMap="menuResultMap">
+        SELECT * FROM menus
+        WHERE menus.id IN (
+            SELECT menu_role.menu_id
+            FROM menu_role
+            WHERE menu_role.role_id = #{role_id}
+        )
+        ORDER BY menus.path
+    </select>
+</mapper>

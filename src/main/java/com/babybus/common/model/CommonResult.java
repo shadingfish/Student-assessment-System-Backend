@@ -18,11 +18,11 @@ public class CommonResult<T> {
         this.code = code;
     }
 
-    public static CommonResult<?> error(Integer code, String msg) {
+    public static <T> CommonResult<T> error(Integer code, String msg) {
         return new CommonResult<>(null, msg, code);
     }
 
-    public static <T> CommonResult<?> success(T data, String msg) {
+    public static <T> CommonResult<T> success(T data, String msg) {
         return new CommonResult<T>(data, msg, 200);
     }
 }

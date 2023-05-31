@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/stu_eval
+    url: jdbc:mysql://localhost:3306/stu_eval1
     username: babybus
     password: agiledev
     driver-class-name: com.mysql.cj.jdbc.Driver
