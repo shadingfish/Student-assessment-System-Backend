@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.stu.eval.mapper.evaluation.EvalResultMapper">
+    <resultMap id="EvalResultResultMap" type="com.babybus.stu.eval.model.evaluation.EvalResult">
+        <result column="perf_id" property="perfId"/>
+        <result column="stu_id" property="stuId"/>
+        <result column="card_id" property="cardId"/>
+        <result column="ac_year" property="acYear"/>
+        <result column="scholarship" property="scholarship"/>
+        <result column="eval_status" property="evalStatus"/>
+        <result column="gpa_score" property="gpaScore"/>
+        <result column="report_score" property="reportScore"/>
+        <result column="volun_score" property="volunScore"/>
+        <result column="occup_score" property="occupScore"/>
+        <result column="research_score" property="researchScore"/>
+        <result column="award_score" property="awardScore"/>
+        <result column="practice_score" property="practiceScore"/>
+    </resultMap>
+
+    <insert id="insertEvalResult" parameterType="com.babybus.stu.eval.model.evaluation.EvalResult">
+        INSERT INTO eval_result (stu_id, card_id, ac_year, scholarship, eval_status, gpa_score, report_score, volun_score, occup_score, research_score, award_score, practice_score)
+        VALUES (#{stuId}, #{cardId}, #{acYear}, #{scholarship}, #{evalStatus}, #{gpaScore}, #{reportScore}, #{volunScore}, #{occupScore}, #{researchScore}, #{awardScore}, #{practiceScore})
+    </insert>
+
+    <select id="getEvalResultList" resultType="com.babybus.stu.eval.model.evaluation.EvalResult" resultMap="EvalResultResultMap">
+        SELECT * FROM eval_result WHERE scholarship = #{scholarship} AND ac_year = #{acYear}
+    </select>
+
+    <select id="getEvalResult" resultType="com.babybus.stu.eval.model.evaluation.EvalResult" resultMap="EvalResultResultMap">
+        SELECT * FROM eval_result WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+    </select>
+
+    <update id="updateEvalResult" parameterType="com.babybus.stu.eval.model.evaluation.EvalResult">
+        UPDATE eval_result
+        SET card_id = #{cardId}, scholarship = #{scholarship}, eval_status = #{evalStatus}, gpa_score = #{gpaScore}, report_score = #{reportScore},
+            volun_score = #{volunScore}, occup_score = #{occupScore}, research_score = #{researchScore}, award_score = #{awardScore},
+            practice_score = #{practiceScore}
+        WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+    </update>
+
+    <delete id="deleteEvalResult">
+        DELETE FROM eval_result WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+    </delete>
+</mapper>

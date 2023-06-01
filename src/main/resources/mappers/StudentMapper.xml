@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.stu.eval.mapper.user.StudentMapper">
+    <resultMap id="studentResultMap" type="com.babybus.stu.eval.model.user.Student" extends="userResultMap">
+        <result property="school" column="school"/>
+        <result property="grade" column="grade"/>
+<!--        <result property="clas" column="class" javaType="com.babybus.stu.eval.model.user.Student$Clas"/>-->
+        <result property="clas" column="class"/>
+<!--        <result property="major" column="major" javaType="com.babybus.stu.eval.model.user.Student$Major"/>-->
+        <result property="major" column="major"/>
+    </resultMap>
+
+    <resultMap id="userResultMap" type="com.babybus.stu.eval.model.user.BaseUser">
+        <id property="id" column="id"/>
+        <result property="cardId" column="card_id"/>
+        <result property="name" column="name"/>
+<!--        <result property="chara" column="chara" javaType="com.babybus.stu.eval.model.user.BaseUser$Chara"/>-->
+        <result property="role" column="role"/>
+        <result property="roleId" column="role_id"/>
+        <result property="password" column="password"/>
+<!--        <result property="status" column="status" javaType="com.babybus.stu.eval.model.user.BaseUser$Status"/>-->
+        <result property="status" column="status"/>
+        <result property="birthday" column="birthday"/>
+<!--        <result property="gender" column="gender" javaType="com.babybus.stu.eval.model.user.BaseUser$Gender"/>-->
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <insert id="insertStudent" parameterType="com.babybus.stu.eval.model.user.Student" useGeneratedKeys="true">
+        <!-- 将生成的 user_id 字段值，更新到对象的 userId 属性 -->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO students (id, card_id, name, role, role_id, password, status, birthday, gender, phone, email, school, grade, class, major)
+<!--        VALUES (#{userId}, #{cardId}, #{name}, #{chara.value}, #{password}, #{status.value}, #{birthday}, #{gender.value}, #{phone}, #{email}, #{school}, #{grade}, #{clas.value}, #{major.value})-->
+        VALUES (#{id}, #{cardId}, #{name}, #{role}, #{roleId}, #{password}, #{status}, #{birthday}, #{gender}, #{phone}, #{email}, #{school}, #{grade}, #{clas}, #{major})
+    </insert>
+
+    <select id="getStudentList" resultType="com.babybus.stu.eval.model.user.Student" resultMap="studentResultMap">
+        SELECT *
+        FROM students
+    </select>
+
+    <select id="getStudentById" resultType="com.babybus.stu.eval.model.user.Student" resultMap="studentResultMap">
+        SELECT *
+        FROM students
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getStudentByCardId"  resultMap="studentResultMap">
+        SELECT *
+        FROM students
+        WHERE card_id = #{cardId}
+    </select>
+
+    <update id="updateStudent" parameterType="com.babybus.stu.eval.model.user.Student">
+        UPDATE students
+        SET card_id = #{cardId},
+            name = #{name},
+            chara = #{chara},
+            password = #{password},
+<!--            status = #{status.value},-->
+            status = #{status}
+            birthday = #{birthday},
+<!--            gender = #{gender.value},-->
+            gender = #{gender},
+            phone = #{phone},
+            email = #{email},
+
+            school = #{school},
+            grade = #{grade},
+<!--            class = #{clas.value},-->
+            class = #{clas},
+<!--            major = #{major.value}-->
+            major = #{major}
+        WHERE user_id = #{userId}
+    </update>
+
+    <delete id="deleteStudentById">
+        DELETE
+        FROM students
+        WHERE user_id = #{userId}
+    </delete>
+</mapper>

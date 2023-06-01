@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.stu.eval.yudingyi.mapper.ExportMapper">
+    <select id="exportView" resultType="com.babybus.stu.eval.yudingyi.model.DTO.Export.AllEvalView">
+        SELECT e.eval_status, e.gpa_score, e.report_score, e.volun_score, e.occup_score,
+               e.research_score, e.award_score, e.practice_score, e.final_score,
+               s.card_id, s.name, s.grade, s.major
+        FROM eval_result e
+                 JOIN student s ON e.card_id = s.card_id
+    </select>
+
+    <select id="exportTable" parameterType="java.lang.String" resultType="com.babybus.stu.eval.yudingyi.model.DTO.Export.ExportEvalResult">
+        SELECT * FROM ${table_name}
+    </select>
+
+</mapper>
