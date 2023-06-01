@@ -13,19 +13,57 @@ import com.babybus.stu.eval.yudingyi.model.User;
 import com.babybus.stu.eval.yudingyi.model.VO.FacultyVO;
 import com.babybus.stu.eval.yudingyi.model.VO.StudentVO;
 import com.babybus.stu.eval.yudingyi.util.JwtTokenUtil;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+@CrossOrigin(origins = "http://localhost:8888")
 @RestController
 @ResponseBody
 @RequestMapping("/auth/")
 public class AuthController {
+
+    @Autowired
+    private DefaultKaptcha defaultKaptcha;
+
+    @CrossOrigin
+    @GetMapping("/captcha")
+    public void showCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 生成验证码文本
+        String captchaText = defaultKaptcha.createText();
+
+
+        // 将验证码文本存储在会话中，以供后续验证
+        HttpSession session = request.getSession(true);
+        session.setAttribute("captcha", captchaText);
+        System.out.println("获得Session：" + session);
+        System.out.println("保存验证码：" + session.getAttribute("captcha"));
+
+
+        // 生成验证码图片
+        BufferedImage captchaImage = defaultKaptcha.createImage(captchaText);
+
+        // 将验证码图片写入响应
+        response.setContentType("image/png");
+        try (OutputStream outputStream = response.getOutputStream()) {
+            ImageIO.write(captchaImage, "png", outputStream);
+            outputStream.flush();
+        }
+    }
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
@@ -39,58 +77,41 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public CommonResult<?> login(@RequestBody LoginReqVo loginReqVo) {
-        System.out.println(loginReqVo);
+    public CommonResult<?> login(HttpServletRequest request, @RequestBody LoginReqVo loginReqVo) {
+        HttpSession session = request.getSession(false);
+        System.out.println("获得Session：" + session);
+        String storedCaptcha = (String) session.getAttribute("captcha");
+        System.out.println("Session中的验证码：" + storedCaptcha);
+        System.out.println("获得登录请求体：" + loginReqVo);
+        request.getSession().removeAttribute("captcha"); // 删除会话中的验证码
         String cardId = loginReqVo.getCardId();
+        String captchaText = loginReqVo.getCaptchaText();
 
-        User user = userMapper.getUserByCardId(cardId);
+        if (captchaText.equalsIgnoreCase(storedCaptcha)){
+            System.out.println("验证码正确，执行登录逻辑");
+            User user = userMapper.getUserByCardId(cardId);
 
-        if (user == null) {
-            System.out.println("未找到用户");
-            return CommonResult.error(50007,"登录失败，账号密码不正确");
+            if (user == null) {
+                System.out.println("未找到用户");
+                return CommonResult.error(50007,"登录失败，账号密码不正确");
+            }
+
+            System.out.println("找到的用户为：" + user);
+
+            if (!loginReqVo.getPassword().equals(user.getPassword())) {
+                System.out.println("登录失败，账号密码不正确");
+                return CommonResult.error(50007,"登录失败，账号密码不正确");
+            }
+
+            System.out.println("登录成功");
+            String token = jwtTokenUtil.generateAccessToken(cardId);
+
+            return CommonResult.success(token, "登录成功，生成学号对应token。");
+
+        }else{
+            System.out.println("验证码错误，显示错误消息");
+            return CommonResult.error(50003, "验证码错误。");
         }
-
-        System.out.println("找到的用户为：" + user);
-
-        if (!loginReqVo.getPassword().equals(user.getPassword())) {
-            System.out.println("登录失败，账号密码不正确");
-            return CommonResult.error(50007,"登录失败，账号密码不正确");
-        }
-
-        System.out.println("登录成功");
-        String token = jwtTokenUtil.generateAccessToken(cardId);
-
-//        // 生成访问令牌和刷新令牌
-//        String accessToken = jwtTokenUtil.generateAccessToken(cardId);
-//        String refreshToken = jwtTokenUtil.generateRefreshToken(cardId);
-//        TokenResponse token_resp = new TokenResponse(accessToken,refreshToken);
-
-//        BigInteger user_id = user.getId();
-//        System.out.println("角色ID: " + user_id);
-//        List<RoleNodeUrl> roleNodeUrlList = userMapper.findRole(user_id);
-//        System.out.println("角色权限表: \n" + roleNodeUrlList);
-//
-//        String userKey = user_id.toString();
-////        redisService.deleteValue(userKey);
-//        if(!redisService.isValidToken(userKey)){
-//            Set<String> permissionUrls = new HashSet<>();
-//            for (RoleNodeUrl roleNodeUrl : roleNodeUrlList) {
-//                permissionUrls.add(roleNodeUrl.getUrl());
-//            }
-//            for (String permissionUrl : permissionUrls) {
-//                redisService.rpush(userKey, permissionUrl);
-//            }
-//            System.out.print("初始化Redis信息，");
-//        }else{
-//            System.out.print("Redis已初始化信息，");
-//        }
-//        System.out.println("Redis权限表：" + redisService.getListValues(userKey));
-//
-//        Object[] data = {"用户ID: " + user.getId(), "权限表: " , roleNodeUrlList};
-//
-//        CommonResult<Object[]> result = CommonResult.success(data);
-
-        return CommonResult.success(token, "登录成功，生成学号对应token。");
     }
 
     @CrossOrigin
