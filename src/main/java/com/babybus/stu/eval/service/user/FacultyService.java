@@ -25,7 +25,7 @@ public class FacultyService {
         return facultyMapper.getFacultyByCardId(cardId);
     }
     public Integer updateFaculty(Faculty faculty) {
-        Faculty origin = getFacultyById(faculty.getUserId());
+        Faculty origin = getFacultyById(faculty.getId());
 
         if (origin == null) {
             return 0;

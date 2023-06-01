@@ -1,10 +1,7 @@
 package com.babybus.stu.eval.service.user;
 
-import com.babybus.stu.eval.model.common.CommonResult;
 import com.babybus.stu.eval.model.user.Student;
-import com.babybus.stu.eval.model.user.User;
 import com.babybus.stu.eval.mapper.user.StudentMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +11,6 @@ import java.util.List;
 public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
-
     public Integer insertStudent(Student student) {
         return studentMapper.insertStudent(student);
     }
@@ -28,7 +24,7 @@ public class StudentService {
         return studentMapper.getStudentByCardId(cardId);
     }
     public Integer updateStudent(Student student) {
-        Student origin = getStudentById(student.getUserId());
+        Student origin = getStudentById(student.getId());
 
         if (origin == null) {
             return 0;

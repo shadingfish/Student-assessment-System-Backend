@@ -7,51 +7,52 @@
         <result property="job" column="job"/>
     </resultMap>
 
-    <resultMap id="userResultMap" type="com.babybus.stu.eval.model.user.User">
+    <resultMap id="userResultMap" type="com.babybus.stu.eval.model.user.BaseUser">
         <id property="userId" column="user_id"/>
         <result property="cardId" column="card_id"/>
         <result property="name" column="name"/>
-        <!--        <result property="chara" column="chara" javaType="com.babybus.stu.eval.model.user.User$Chara"/>-->
-        <result property="chara" column="chara"/>
+        <!--        <result property="chara" column="chara" javaType="com.babybus.stu.eval.model.user.BaseUser$Chara"/>-->
+        <result property="role" column="role"/>
+        <result property="roleId" column="role_id"/>
         <result property="password" column="password"/>
-        <!--        <result property="status" column="status" javaType="com.babybus.stu.eval.model.user.User$Status"/>-->
+        <!--        <result property="status" column="status" javaType="com.babybus.stu.eval.model.user.BaseUser$Status"/>-->
         <result property="status" column="status"/>
         <result property="birthday" column="birthday"/>
-        <!--        <result property="gender" column="gender" javaType="com.babybus.stu.eval.model.user.User$Gender"/>-->
+        <!--        <result property="gender" column="gender" javaType="com.babybus.stu.eval.model.user.BaseUser$Gender"/>-->
         <result property="gender" column="gender"/>
         <result property="phone" column="phone"/>
         <result property="email" column="email"/>
     </resultMap>
 
-    <insert id="insertFaculty" parameterType="com.babybus.stu.eval.model.user.Faculty">
+    <insert id="insertFaculty" parameterType="com.babybus.stu.eval.model.user.Faculty" useGeneratedKeys="true">
         <!-- 将生成的 user_id 字段值，更新到对象的 userId 属性 -->
-        <selectKey keyProperty="userId" resultType="int" order="AFTER">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO faculty (user_id, card_id, name, chara, password, status, birthday, gender, phone, email, depart, job)
+        INSERT INTO faculties (id, card_id, name, role, role_id, password, status, birthday, gender, phone, email, depart, job)
 <!--        VALUES (#{userId}, #{cardId}, #{name}, #{chara.value}, #{password}, #{status.value}, #{birthday}, #{gender.value}, #{phone}, #{email}, #{depart}, #{job})-->
-        VALUES (#{userId}, #{cardId}, #{name}, #{chara}, #{password}, #{status}, #{birthday}, #{gender}, #{phone}, #{email}, #{depart}, #{job})
+        VALUES (#{id}, #{cardId}, #{name}, #{role}, #{roleId}, #{password}, #{status}, #{birthday}, #{gender}, #{phone}, #{email}, #{depart}, #{job})
     </insert>
 
     <select id="getFacultyList" resultType="com.babybus.stu.eval.model.user.Faculty" resultMap="facultyResultMap">
         SELECT *
-        FROM faculty
+        FROM faculties
     </select>
 
     <select id="getFacultyById" resultType="com.babybus.stu.eval.model.user.Faculty" resultMap="facultyResultMap">
         SELECT *
-        FROM faculty
+        FROM faculties
         WHERE user_id = #{userId}
     </select>
 
     <select id="getFacultyByCardId" resultType="com.babybus.stu.eval.model.user.Faculty" resultMap="facultyResultMap">
         SELECT *
-        FROM faculty
+        FROM faculties
         WHERE card_id = #{cardId}
     </select>
 
     <update id="updateFaculty" parameterType="com.babybus.stu.eval.model.user.Faculty">
-        UPDATE faculty
+        UPDATE faculties
         SET card_id = #{cardId},
             name = #{name},
             chara = #{chara},
@@ -71,7 +72,7 @@
 
     <delete id="deleteFacultyById">
         DELETE
-        FROM faculty
+        FROM faculties
         WHERE user_id = #{userId}
     </delete>
 </mapper>

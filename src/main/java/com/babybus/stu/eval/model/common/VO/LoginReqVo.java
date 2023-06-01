@@ -16,7 +16,7 @@ public class LoginReqVo {
     @NotEmpty(message = "用户名不能为空")
     @Length(min = 3, max = 20, message = "用户名长度不正确")
     @Pattern(regexp = "^[A-Za-z0-9]+$", message = "用户名为身份证号，只能为数字以及字母")
-    private String username;
+    private String cardId;
 
     @ApiModelProperty(value = "密码", required = true,example = "123456")
     @NotEmpty(message = "密码不能为空")

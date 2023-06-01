@@ -1,4 +1,4 @@
-package com.babybus.stu.eval.controller.yudingyi;
+package com.babybus.stu.eval.yudingyi.controller;
 
 
 import com.babybus.stu.eval.model.common.CommonResult;

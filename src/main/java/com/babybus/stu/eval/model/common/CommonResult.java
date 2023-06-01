@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CommonResult<T> {
     T data;
-    String message;
+    String msg;
     Integer code;
 
     public CommonResult(T data) {
@@ -14,7 +14,7 @@ public class CommonResult<T> {
 
     public CommonResult(T data, String msg, Integer code) {
         this.data = data;
-        message = msg;
+        this.msg = msg;
         this.code = code;
     }
 
