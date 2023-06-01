@@ -1,4 +1,4 @@
-package com.babybus.stu.eval.model.common.DTO.Research;
+package com.babybus.stu.eval.yudingyi.model.DTO.Research;
 
 import lombok.Data;
 

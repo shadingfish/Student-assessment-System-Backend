@@ -1,7 +1,7 @@
-package com.babybus.stu.eval.mapper.evaluation;
+package com.babybus.stu.eval.yudingyi.mapper;
 
-import com.babybus.stu.eval.model.common.DTO.Export.AllEvalView;
-import com.babybus.stu.eval.model.common.DTO.Export.ExportEvalResult;
+import com.babybus.stu.eval.yudingyi.model.DTO.Export.AllEvalView;
+import com.babybus.stu.eval.yudingyi.model.DTO.Export.ExportEvalResult;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

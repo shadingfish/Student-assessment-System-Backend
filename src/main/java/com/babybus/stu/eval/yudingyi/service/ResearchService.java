@@ -1,8 +1,8 @@
-package com.babybus.stu.eval.service.material;
+package com.babybus.stu.eval.yudingyi.service;
 
-import com.babybus.stu.eval.mapper.material.ResearchMapper;
-import com.babybus.stu.eval.model.common.DTO.Research.CheckResearch;
-import com.babybus.stu.eval.model.common.DTO.Research.ReturnResearch;
+import com.babybus.stu.eval.yudingyi.mapper.ResearchMapper;
+import com.babybus.stu.eval.yudingyi.model.DTO.Research.CheckResearch;
+import com.babybus.stu.eval.yudingyi.model.DTO.Research.ReturnResearch;
 import com.babybus.stu.eval.model.material.Research;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

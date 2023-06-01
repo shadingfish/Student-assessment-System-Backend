@@ -1,7 +1,7 @@
-package com.babybus.stu.eval.mapper.material;
+package com.babybus.stu.eval.yudingyi.mapper;
 
-import com.babybus.stu.eval.model.common.DTO.Research.CheckResearch;
-import com.babybus.stu.eval.model.common.DTO.Research.ReturnResearch;
+import com.babybus.stu.eval.yudingyi.model.DTO.Research.CheckResearch;
+import com.babybus.stu.eval.yudingyi.model.DTO.Research.ReturnResearch;
 import com.babybus.stu.eval.model.material.Research;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

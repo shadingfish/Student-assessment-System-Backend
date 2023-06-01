@@ -1,14 +1,14 @@
 package com.babybus.stu.eval.yudingyi.controller;
 
 import com.babybus.stu.eval.model.common.CommonResult;
-import com.babybus.stu.eval.service.material.ResearchService;
+import com.babybus.stu.eval.yudingyi.service.ResearchService;
 import com.babybus.stu.eval.model.common.VO.Research.File;
 import com.babybus.stu.eval.model.common.VO.Research.ResearchReqVo;
 import com.babybus.stu.eval.model.common.VO.Research.Domain;
 
-import com.babybus.stu.eval.model.common.DTO.Research.CheckResearch;
+import com.babybus.stu.eval.yudingyi.model.DTO.Research.CheckResearch;
 import com.babybus.stu.eval.model.material.Research;
-import com.babybus.stu.eval.model.common.DTO.Research.ReturnResearch;
+import com.babybus.stu.eval.yudingyi.model.DTO.Research.ReturnResearch;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
