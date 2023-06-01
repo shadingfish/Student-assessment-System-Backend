@@ -1,11 +1,60 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 100MB
+  jackson:
+    #日期格式化
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      #格式化输出
+      indent_output: true
+      #忽略无法转换的对象
+      fail_on_empty_beans: false
+    #设置空如何序列化
+    defaultPropertyInclusion: NON_EMPTY
+    deserialization:
+      #允许对象忽略json中不存在的属性
+      fail_on_unknown_properties: false
+    parser:
+      #允许出现特殊字符和转义符
+      allow_unquoted_control_chars: true
+      #允许出现单引号
+      allow_single_quotes: true
   datasource:
     url: jdbc:mysql://localhost:3306/stu_eval
-    username: babybus
-    password: agiledev
+    username: root
+    password: 123456
+#    url: jdbc:mysql://localhost:3306/stu_eval
+#    username: babybus
+#    password: agiledev
+#    url: jdbc:mysql://43.142.90.238:3306/agilesoftware
+#    username: agilesoftware
+#    password: nxCHCcT8BY34aMzE
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  #Redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
 server:
   port: 20235
+
 # MyBatis 配置
 mybatis:
-  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml
+  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml
+
+jwt:
+  # openssl rand -base64 256
+  secret: gx4SN/4gh6QPvLfVWCW8Aoo4l2n66d2338IwXyu1koDT1W94XS35OZJPYkA2IIMMgmlz96LCHSNc8jLYuzwB1IreKOZz2TZhsWODfjHAS9bYlduniCUSuSPZ5/OP15O63fn1kN1N5w64frpyWcWbTtiCgLMkJpnfjmqFMAr7fgcOGyt2rmunvFYni9T78Q4fn/0gpx3qm8zXw3oBbFb1Ge9Wnh1UCSapXd/EzLau3iaXqp9f+8FHmSCo9vbEaRSRMPHdcpnB4WKHKySE/BCNSsWM+kHmHyrAbvKErPCz2XXMnIalUoAtquq03LnmYjrBHyI230VcYEVzGmzLOTsSJw==
+  access_token:
+    expiration: 3600
+  refresh_token:
+    expiration: 604800

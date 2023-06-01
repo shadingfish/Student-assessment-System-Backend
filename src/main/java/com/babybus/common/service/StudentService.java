@@ -1,6 +1,5 @@
 package com.babybus.common.service;
 
-
 import com.babybus.common.mapper.StudentMapper;
 import com.babybus.common.model.user.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import java.util.List;
 public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
-
     public Integer insertStudent(Student student) {
         return studentMapper.insertStudent(student);
     }

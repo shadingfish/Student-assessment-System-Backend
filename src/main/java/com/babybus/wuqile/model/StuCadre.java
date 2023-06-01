@@ -1,6 +1,6 @@
 package com.babybus.wuqile.model;
 
-import com.babybus.stu_eval.model.Material;
+import com.babybus.common.model.material.Material;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
