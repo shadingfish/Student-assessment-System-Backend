@@ -1,4 +1,4 @@
-package com.babybus.stu.eval.yudingyi.controller;
+package com.babybus.stu.eval.yudingyi.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
