@@ -8,4 +8,4 @@ server:
   port: 20235
 # MyBatis 配置
 mybatis:
-  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml
+  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml
