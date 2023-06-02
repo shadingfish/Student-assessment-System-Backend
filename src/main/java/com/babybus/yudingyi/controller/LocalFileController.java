@@ -47,7 +47,7 @@ public class LocalFileController {
         // Get the current working directory
         String currentWorkingDir = System.getProperty("user.dir");
         // Define the relative path to the desired directory
-        String relativePath = "src/main/resources/static";
+        String relativePath = "src/main/resources/yudingyi/static";
         // Create the absolute path by combining the current working directory and the relative path
         Path absolutePath = Paths.get(currentWorkingDir, relativePath);
         // Convert the absolute path to a string
