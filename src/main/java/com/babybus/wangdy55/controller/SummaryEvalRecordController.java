@@ -1,7 +1,7 @@
 package com.babybus.wangdy55.controller;
 
 import com.babybus.common.model.CommonResult;
-import com.babybus.wangdy55.model.SummaryEvalRecord;
+import com.babybus.wangdy55.model.DTO.SummaryRecordDto;
 import com.babybus.wangdy55.service.SummaryEvalRecordService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class SummaryEvalRecordController {
     @GetMapping("/list")
     CommonResult<?> getSummaryEvalRecordList(Integer judgeId, String acYear) {
         try {
-            List<SummaryEvalRecord> list = service.getSummaryEvalRecordList(judgeId, acYear);
+            List<SummaryRecordDto> list = service.getSummaryEvalRecordList(judgeId, acYear);
             return CommonResult.success(list, "获取成功");
         } catch (Exception e) {
             System.out.println(e.toString());
