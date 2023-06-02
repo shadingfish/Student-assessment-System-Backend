@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface SummaryEvalRecordMapper {
+public interface SummaryRecordMapper {
 //    Integer insertRecord(SummaryRecordDto record);
     List<SummaryRecordDto> getSummaryEvalRecordList(@Param("judgeId")Integer judgeId, @Param("acYear")String acYear);
 }

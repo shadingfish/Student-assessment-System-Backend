@@ -8,5 +8,5 @@ public class StudentDto {
     String name; // 姓名
     Integer grade; // 年级
     String major; // 专业
-    String $class; // 班级
+    String class1; // 班级
 }

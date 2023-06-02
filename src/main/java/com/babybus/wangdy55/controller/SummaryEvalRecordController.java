@@ -2,7 +2,7 @@ package com.babybus.wangdy55.controller;
 
 import com.babybus.common.model.CommonResult;
 import com.babybus.wangdy55.model.DTO.SummaryRecordDto;
-import com.babybus.wangdy55.service.SummaryEvalRecordService;
+import com.babybus.wangdy55.service.SummaryRecordService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/eval/summary")
 public class SummaryEvalRecordController {
     @Autowired
-    SummaryEvalRecordService service;
+    SummaryRecordService service;
 
     @GetMapping("/list")
     CommonResult<?> getSummaryEvalRecordList(Integer judgeId, String acYear) {
