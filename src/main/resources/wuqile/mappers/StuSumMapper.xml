@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.babybus.wuqile.mapper.wuqile.StuSumMapper">
-    <select id="getAll" resultType="com.babybus.stu_eval.model.wuqile.StuSum">
+<mapper namespace="com.babybus.wuqile.mapper.StuSumMapper">
+    <select id="getAll" resultType="com.babybus.wuqile.model.StuSum">
         SELECT * FROM agilesoftware.eval_result
     </select>
-    <select id="getByStuID" resultType="com.babybus.stu_eval.model.wuqile.StuSum">
+    <select id="getByStuID" resultType="com.babybus.wuqile.model.StuSum">
         SELECT * FROM agilesoftware.eval_result WHERE stu_id = #{stu_id}
     </select>
 </mapper>

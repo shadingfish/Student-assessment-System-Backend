@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.babybus.stu_eval.mapper.wuqile.StuCompMapper">
-    <select id="getAll" resultType="com.babybus.stu_eval.model.wuqile.StuComp">
+<mapper namespace="com.babybus.wuqile.mapper.StuCompMapper">
+    <select id="getAll" resultType="com.babybus.wuqile.model.StuComp">
         SELECT * FROM agilesoftware.competition_achievement
     </select>
-    <insert id="ViewerInsert" parameterType="com.babybus.stu_eval.model.wuqile.StuComp">
+    <insert id="ViewerInsert" parameterType="com.babybus.wuqile.model.StuComp">
         UPDATE competition_achievement SET eval_status = #{eval_status}, remark = #{remark}, eval_time = #{eval_time}, judge_id = #{judge_id} WHERE competition_achievement.mat_id = #{mat_id}
     </insert>
-    <delete id="deleteCom" parameterType="com.babybus.stu_eval.model.wuqile.StuComp">
+    <delete id="deleteCom" parameterType="com.babybus.wuqile.model.StuComp">
         DELETE FROM competition_achievement WHERE competition_achievement.mat_id = #{mat_id}
     </delete>
-    <select id="getAllByStuID" resultType="com.babybus.stu_eval.model.wuqile.StuComp">
+    <select id="getAllByStuID" resultType="com.babybus.wuqile.model.StuComp">
         SELECT * FROM agilesoftware.competition_achievement WHERE competition_achievement.stu_id=#{stu_id}
     </select>
-    <insert id="insertRecord" parameterType="com.babybus.stu_eval.model.wuqile.StuComp">
+    <insert id="insertRecord" parameterType="com.babybus.wuqile.model.StuComp">
         INSERT INTO `competition_achievement (mat_id, stu_id, ac_year, mat_type, submit_time, eval_status, remark, file_url, eval_time, judge_id, comp_name, comp_level, award_time, ranking, award)
         VALUES (#{mat_id}, #{stu_id}, #{ac_year}, #{mat_type}, CURRENT_TIMESTAMP, #{eval_status}, '', NULL, CURRENT_TIMESTAMP, NULL, #{comp_level}, #{comp_level}, #{award_time}, #{ranking}, #{award})
     </insert>
