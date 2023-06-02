@@ -1,0 +1,79 @@
+I write a SQL in the mapper.xml file in Mybaits. 
+
+    <insert id="postBJHourData" parameterType="java.util.List">
+        INSERT INTO BJHour_table (datetime, hum, temp)
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+            (#{item.datetime}, #{item.hum}, #{item.temp})
+        </foreach>
+    </insert>
+
+This SQL can inset multiple rows  of data in the database at once. But the datas that I write into are daily weather information of a future week, this means when a day pass, I'll get 1 row of new data and 6 rows of old data would remain. When I want to insert these datas into database, an error occured becasue the remained 6 old data has "primary key" conflict with data in database, which makes me fail to insert that one row of new data.... How can I improve my code?
+
+Using this SQL, 
+
+    <insert id="postBJHourData" parameterType="java.util.List">
+        INSERT INTO BJHour_table (datetime, hum, temp)
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+            (#{item.datetime}, #{item.hum}, #{item.temp})
+        </foreach>
+        ON DUPLICATE KEY UPDATE hum=VALUES(hum), temp=VALUES(temp)
+    </insert>
+
+I want to insert data rows following the order of getting items in <foreach>...</foreach> part, and I want the SQL database keep the order that data gets inserted. How can I achieve this by improving my code or reseting my database.
+
+!
+To ensure that the database keeps the order in which the data is inserted, you can add an additional column to the BJHour_table that tracks the order of the data. For example, you can add a column called "id" that is an auto-incremented integer.
+
+You can modify the SQL code to include this "id" column as follows:
+
+
+
+
+<insert id="postBJHourData" parameterType="java.util.List">
+    INSERT INTO BJHour_table (id, datetime, hum, temp)
+    VALUES
+    <foreach item="item" collection="list" separator=",">
+        (null, #{item.datetime}, #{item.hum}, #{item.temp})
+    </foreach>
+    ON DUPLICATE KEY UPDATE hum=VALUES(hum), temp=VALUES(temp)
+</insert>
+
+Then is there any wrong with my following code to insert data into the below generated table - BJHour_table. Becasue the id is required not be null, but also id is auto-increment, so I don't want to set a value for it when inserting.
+
+<insert id="postBJHourData" parameterType="java.util.List">
+    INSERT INTO BJHour_table (id, datetime, hum, temp)
+    VALUES
+    <foreach item="item" collection="list" separator=",">
+        (null, #{item.datetime}, #{item.hum}, #{item.temp})
+    </foreach>
+    ON DUPLICATE KEY UPDATE hum=VALUES(hum), temp=VALUES(temp)
+</insert>
+
+How can I use java to insert LocalDateTime data with "yyyy-MM-dd" pattern into a MySQL database? How should I create the corresponding table to hold the value in advance in database? 
+
+How can I modify the SQL code below to set the return select result to ascending order?
+<select id="getDate" resultType="java.lang.String">
+    SELECT date FROM BJDay_table
+    ORDER BY date DESC
+    LIMIT 7
+</select>
+
+假设有两个深度学习模型M1和M2，它们的Accuracy以及F1-measure相同，但M1的Precision为0.4，Recall为0.8；而M2的Precision为0.8，Recall为0.4，请分析一下M1和M2的性能差别在哪，它们分别适用于什么场景。
+
+When I use use JavaScript ajax method to get resources from Web through this link "", I got error : strict-origin-when-cross-origin, how can I solve this from Front end (coded in JavaScript) or back end(coded in Java).
+
+
+$.ajax({
+        type: 'GET',
+        url: `http://localhost:8081/getHourly`,
+        dataType: 'jsonp', // 处理jsonp的请求，指定服务器返回的数据类型
+        success:function (res) {
+          console.log('hourly_data 获取成功', res);
+        },
+        error(err) {
+          console.log('请求失败', err);
+        },
+      });       },
+ 

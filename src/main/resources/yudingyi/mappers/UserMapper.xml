@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.yudingyi.mapper.UserMapper">
+
+    <resultMap id="myUserResultMap" type="com.babybus.yudingyi.model.User">
+        <id property="id" column="id"/>
+        <result property="cardId" column="card_id"/>
+        <result property="password" column="password"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+
+    <insert id="insertUser" parameterType="com.babybus.yudingyi.model.User">
+        <!-- Use generated keys to retrieve the auto-generated user ID -->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO users (card_id, password, role_id)
+        VALUES (#{cardId}, #{password}, #{roleId})
+    </insert>
+
+    <select id="getUserList" resultMap="myUserResultMap">
+        SELECT * FROM users
+    </select>
+
+    <select id="getUserByCardId" resultMap="myUserResultMap">
+        SELECT * FROM users WHERE card_id = #{card_id}
+    </select>
+
+</mapper>
