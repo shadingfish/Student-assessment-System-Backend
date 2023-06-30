@@ -40,6 +40,17 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo());
     }
 
+    @Bean
+    public Docket yudingyiApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.babybus.yudingyi.controller"))
+                .paths(PathSelectors.any())
+                .build()
+                .groupName("yudingyi API")
+                .apiInfo(apiInfo());
+    }
+
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "Babybus SCE Backend API",

@@ -26,12 +26,12 @@ spring:
 #    url: jdbc:mysql://localhost:3306/stu_eval
 #    username: root
 #    password: 123456
-    url: jdbc:mysql://localhost:3306/stu_eval1
-    username: babybus
-    password: agiledev
-#    url: jdbc:mysql://43.142.90.238:3306/agilesoftware
-#    username: agilesoftware
-#    password: nxCHCcT8BY34aMzE
+#    url: jdbc:mysql://localhost:3306/stu_eval1
+#    username: babybus
+#    password: agiledev
+    url: jdbc:mysql://43.142.90.238:3306/stu_eval
+    username: stu_eval
+    password: H8mJdcDzjPxMynMM
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5

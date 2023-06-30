@@ -1,8 +1,11 @@
 package com.babybus.wangdy55.controller;
 
 import com.babybus.common.model.CommonResult;
+import com.babybus.common.model.user.Student;
+import com.babybus.common.service.StudentService;
 import com.babybus.wangdy55.model.Summary;
 import com.babybus.wangdy55.service.SummaryService;
+import com.babybus.yudingyi.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,13 @@ import java.util.List;
 public class SummaryController {
     @Autowired
     private SummaryService summaryService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @ApiOperation("插入个人学年总结")
-    @PostMapping("/insert")
+    @PostMapping
     public CommonResult<?> insertSummary(@RequestBody Summary summary) {
         try {
             // 将用户信息保存到数据库
@@ -34,10 +41,12 @@ public class SummaryController {
     }
 
     @ApiOperation("获取个人学年总结列表接口")
-    @GetMapping("/get-list")
-    public CommonResult<?> getSummaryList(@RequestParam Integer id) {
+    @GetMapping("/list")
+    public CommonResult<?> getSummaryList(@RequestHeader("Authorization") String accessToken) {
         try {
-            List<Summary> summaryList = summaryService.getSummaryList(id);
+            String cardId = jwtTokenUtil.getUsernameFromToken(accessToken);
+            Student student = studentService.getStudentByCardId(cardId);
+            List<Summary> summaryList = summaryService.getSummaryList(student.getId(), "2022-2023");
             return CommonResult.success(summaryList, "获取成功");
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -46,7 +55,7 @@ public class SummaryController {
     }
 
     @ApiOperation("根据学生ID获取个人学年总结")
-    @GetMapping("/get")
+    @GetMapping
     public CommonResult<?> getSummary(@RequestParam Integer stuId) {
         try {
             Summary summary = summaryService.getSummaryById(stuId);
@@ -63,7 +72,7 @@ public class SummaryController {
     }
 
     @ApiOperation("更新个人学年总结")
-    @PutMapping("/update")
+    @PutMapping
     public CommonResult<?> updateSummary(@RequestBody Summary summary) {
         try {
             Integer affected = summaryService.updateSummary(summary);
@@ -78,7 +87,7 @@ public class SummaryController {
     }
 
     @ApiOperation("删除个人学年总结")
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public CommonResult<?> deleteSummaryById(@RequestParam Integer id) {
         try {
             Integer affected = summaryService.deleteSummaryById(id);

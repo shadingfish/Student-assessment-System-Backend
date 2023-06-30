@@ -1,9 +1,11 @@
 package com.babybus.wangdy55.service;
 
+import com.babybus.wangdy55.model.DTO.EvalRecordDto;
 import com.babybus.wangdy55.model.DTO.SummaryRecordDto;
 
 import java.util.List;
 
 public interface SummaryRecordService {
-    List<SummaryRecordDto> getSummaryEvalRecordList(Integer judgeId, String acYear);
+    List<SummaryRecordDto> getSummaryRecordList(Integer judgeId, String acYear);
+    Integer updateSummaryRecord(EvalRecordDto record);
 }
