@@ -62,6 +62,7 @@ public class ResearchController {
             }
 
         } catch (Exception e ){
+            e.printStackTrace();
             System.out.println("后端上传错误：" + e.getMessage());
             return CommonResult.error(500, "后端上传错误");
         }
@@ -124,6 +125,7 @@ public class ResearchController {
                 evalRecordService.updateEvalRecord(evalRecord);
             }
         } catch (Exception e){
+            e.printStackTrace();
             System.out.println("后端打分错误：" + e.getMessage());
             return CommonResult.error(500, "后端打分错误");
         }

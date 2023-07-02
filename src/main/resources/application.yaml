@@ -60,6 +60,7 @@ jwt:
     expiration: 604800
 
 file:
-  upload-path: G:/storage/
-  allowed-types: jpg,png
+#  upload-path: G:/storage/
+  upload-path: D:/storage/
+  allowed-types: jpg,png,pdf,docx,txt
   max-size: 10485760   # 10MB

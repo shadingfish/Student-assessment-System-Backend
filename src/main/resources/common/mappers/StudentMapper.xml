@@ -32,15 +32,15 @@
         VALUES (#{id}, #{cardId}, #{name}, #{role}, #{roleId}, #{password}, #{status}, #{birthday}, #{gender}, #{phone}, #{email}, #{school}, #{grade}, #{clas}, #{major})
     </insert>
 
-    <select id="getStudentList" resultType="com.babybus.common.model.user.Student" resultMap="studentResultMap">
+    <select id="getStudentList" resultMap="studentResultMap">
         SELECT *
         FROM students
     </select>
 
-    <select id="getStudentById" resultType="com.babybus.common.model.user.Student" resultMap="studentResultMap">
+    <select id="getStudentById" resultMap="studentResultMap">
         SELECT *
         FROM students
-        WHERE id = #{id}
+        WHERE id = #{userId}
     </select>
 
     <select id="getStudentByCardId"  resultMap="studentResultMap">

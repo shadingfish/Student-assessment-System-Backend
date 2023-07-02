@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface EvalRecordMapper {
-    Integer insertEvalRecord(EvalRecord record);
+    void insertEvalRecord(EvalRecord record);
     List<EvalRecord> getEvalRecordList(String type, Integer judgeId, String acYear);
     EvalRecord getEvalRecord(@Param("stuId") Integer stuId, @Param("judgeId") Integer judgeId);
     EvalRecord getEvalByType(@Param("stuId") Integer stuId, @Param("type") String type);
