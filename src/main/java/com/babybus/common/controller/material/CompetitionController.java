@@ -3,6 +3,7 @@ package com.babybus.common.controller.material;
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.material.Competition;
 import com.babybus.common.service.material.CompetitionService;
+import com.babybus.yudingyi.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import java.util.List;
 public class CompetitionController {
     @Autowired
     private CompetitionService competitionService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @ApiOperation("插入竞赛获奖记录")
     @PostMapping("/insert")
@@ -35,9 +38,10 @@ public class CompetitionController {
 
     @ApiOperation("获取竞赛获奖记录列表")
     @GetMapping("/get-list")
-    public CommonResult<?> getCompetitionList(@RequestParam Integer stuId) {
+    public CommonResult<?> getCompetitionList(@RequestHeader("Authorization")String token) {
         try {
-            List<Competition> competitionList = competitionService.getCompetitionList(stuId);
+            String card_id=jwtTokenUtil.getUsernameFromToken(token);
+            List<Competition> competitionList = competitionService.getCompetitionListByCardId(card_id);
             return CommonResult.success(competitionList, "获取成功");
         } catch (Exception e) {
             System.out.println(e.toString());
