@@ -4,7 +4,7 @@
 <mapper namespace="com.babybus.common.mapper.material.CompetitionMapper">
     <resultMap id="competitionResultMap" type="com.babybus.common.model.material.Competition" extends="materialResultMap">
         <result property="compName" column="comp_name" />
-        <result property="level" column="level" />
+        <result property="level" column="comp_level" />
         <result property="awardTime" column="award_time" />
         <result property="ranking" column="ranking" />
         <result property="award" column="award" />
@@ -38,6 +38,11 @@
 
     <select id="getCompetitionList" resultType="com.babybus.common.model.material.Competition" resultMap="competitionResultMap">
         SELECT * FROM competition WHERE stu_id = #{stuId}
+    </select>
+
+
+    <select id="getCompetitionListByCardId" resultType="com.babybus.common.model.material.Competition" resultMap="competitionResultMap">
+        SELECT * FROM competition WHERE card_id = #{card_id}
     </select>
 
     <update id="updateCompetition" parameterType="com.babybus.common.model.material.Competition">

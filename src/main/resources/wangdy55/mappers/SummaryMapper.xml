@@ -29,15 +29,11 @@
     </insert>
 
     <select id="getSummaryById" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
-        SELECT * FROM summaries WHERE stu_id = #{stuId}
-    </select>
-
-    <select id="getSummary" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
         SELECT * FROM summaries WHERE stu_id = #{id} AND ac_year = #{acYear}
     </select>
 
     <select id="getSummaryList" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
-        SELECT * FROM summaries WHERE stu_id = #{stuId}
+        SELECT * FROM summaries WHERE stu_id = #{stuId} AND ac_year = #{acYear}
     </select>
 
     <update id="updateSummary" parameterType="com.babybus.wangdy55.model.Summary">
@@ -50,4 +46,15 @@
     <delete id="deleteSummaryById" parameterType="int">
         DELETE FROM summaries WHERE id = #{id}
     </delete>
+
+    <resultMap id="summaryDtoResultMap" type="com.babybus.wangdy55.model.DTO.SummaryDto">
+        <result column="politic_sum" property="politicSum"/>
+        <result column="behave_sum" property="behaveSum"/>
+        <result column="study_sum" property="studySum"/>
+        <result column="health_sum" property="healthSum"/>
+    </resultMap>
+
+    <select id="getSummaryDtoById" resultType="com.babybus.wangdy55.model.DTO.SummaryDto" resultMap="summaryDtoResultMap">
+        SELECT * FROM summaries WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+    </select>
 </mapper>

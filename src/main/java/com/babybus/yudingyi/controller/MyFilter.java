@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@Component
-@Import(WebConfig.class)
+
+//@Component
 @WebFilter(urlPatterns = "/admin-api/user/*")
 public class MyFilter implements Filter {
 

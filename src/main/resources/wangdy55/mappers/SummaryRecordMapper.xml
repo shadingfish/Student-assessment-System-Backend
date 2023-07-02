@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.babybus.wangdy55.mapper.SummaryRecordMapper">
-    <resultMap id="summaryEvalRecordResultMap" type="com.babybus.wangdy55.model.DTO.SummaryRecordDto" extends="evalRecordResultMap">
+    <resultMap id="summaryRecordResultMap" type="com.babybus.wangdy55.model.DTO.SummaryRecordDto" extends="evalRecordResultMap">
         <association property="student" javaType="com.babybus.wangdy55.model.DTO.StudentDto">
             <result property="cardId" column="card_id"/>
             <result property="name" column="name"/>
@@ -20,10 +20,15 @@
         <result property="remark" column="remark" />
     </resultMap>
 
-    <select id="getSummaryEvalRecordList" resultType="com.babybus.wangdy55.model.DTO.SummaryRecordDto" resultMap="summaryEvalRecordResultMap">
+    <select id="getSummaryRecordList" resultType="com.babybus.wangdy55.model.DTO.SummaryRecordDto" resultMap="summaryRecordResultMap">
         SELECT e.id, e.stu_id, e.eval_status, e.eval_time, e.score, e.remark,
             s.card_id, s.name, s.grade, s.major, s.class
         FROM eval_records e JOIN students s ON e.stu_id = s.id
         WHERE e.mat_type = '个人报告' AND e.judge_id = #{judgeId} AND e.ac_year = #{acYear}
     </select>
+    <update id="updateSummaryRecord">
+        UPDATE eval_records
+        SET eval_status = '已通过', score = #{record.score}, remark = #{record.remark}
+        WHERE id = #{record.id}
+    </update>
 </mapper>

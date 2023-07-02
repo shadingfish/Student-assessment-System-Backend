@@ -1,6 +1,7 @@
 package com.babybus.wangdy55.service.impl;
 
 import com.babybus.wangdy55.mapper.SummaryRecordMapper;
+import com.babybus.wangdy55.model.DTO.EvalRecordDto;
 import com.babybus.wangdy55.model.DTO.SummaryRecordDto;
 import com.babybus.wangdy55.service.SummaryRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,11 @@ public class SummaryRecordServiceImpl implements SummaryRecordService {
     @Autowired
     SummaryRecordMapper mapper;
 
-    public List<SummaryRecordDto> getSummaryEvalRecordList(Integer judgeId, String acYear) {
-        return mapper.getSummaryEvalRecordList(judgeId, acYear);
+    public List<SummaryRecordDto> getSummaryRecordList(Integer judgeId, String acYear) {
+        return mapper.getSummaryRecordList(judgeId, acYear);
+    }
+
+    public Integer updateSummaryRecord(EvalRecordDto record) {
+        return mapper.updateSummaryRecord(record);
     }
 }

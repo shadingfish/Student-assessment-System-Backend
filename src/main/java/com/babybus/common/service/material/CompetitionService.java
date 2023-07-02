@@ -18,6 +18,9 @@ public class CompetitionService {
     public List<Competition> getCompetitionList(Integer stuId) {
         return competitionMapper.getCompetitionList(stuId);
     }
+    public List<Competition> getCompetitionListByCardId(String card_id) {
+        return competitionMapper.getCompetitionListByCardId(card_id);
+    }
     public Competition getCompetitionById(Integer matId) {
         return competitionMapper.getCompetitionById(matId);
     }

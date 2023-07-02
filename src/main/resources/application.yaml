@@ -49,7 +49,7 @@ server:
 
 # MyBatis 配置
 mybatis:
-  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml
+  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml, classpath:common/mappers/material/*.xml
 
 jwt:
   # openssl rand -base64 256
@@ -58,3 +58,8 @@ jwt:
     expiration: 3600
   refresh_token:
     expiration: 604800
+
+file:
+  upload-path: G:/storage/
+  allowed-types: jpg,png
+  max-size: 10485760   # 10MB
