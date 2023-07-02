@@ -44,7 +44,7 @@ public class ExportController {
         }
     };
      */
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @CrossOrigin
     @GetMapping ("/table")
     //前端下载文件
     public ResponseEntity<byte[]> exportTable(@RequestParam("table_name") String table_name) {
@@ -53,6 +53,7 @@ public class ExportController {
 
         try {
             List<ExportEvalResult> eval_results = exportService.exportTable(table_name);
+            System.out.println(eval_results);
 
             // Create the Excel file in memory
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -75,7 +76,7 @@ public class ExportController {
         }
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @CrossOrigin
     @GetMapping ("/view")
     public List<AllEvalView> exportView(){
         List<AllEvalView> list = exportService.exportView();

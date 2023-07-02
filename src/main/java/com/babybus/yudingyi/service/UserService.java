@@ -16,6 +16,7 @@ public class UserService {
     Integer insertUser(User user) {
         return userMapper.insertUser(user);
     }
+
     List<User> getUserList() {
         return userMapper.getUserList();
     }

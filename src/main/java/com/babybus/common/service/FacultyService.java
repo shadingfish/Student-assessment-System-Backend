@@ -36,4 +36,7 @@ public class FacultyService {
     public Integer deleteFacultyById(Integer userId) {
         return facultyMapper.deleteFacultyById(userId);
     }
+    public List<Faculty> getFacultyByRole(String role) {
+        return facultyMapper.getFacultyByRole(role);
+    }
 }
