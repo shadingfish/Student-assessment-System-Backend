@@ -4,7 +4,7 @@
 <mapper namespace="com.babybus.common.mapper.material.CompetitionMapper">
     <resultMap id="competitionResultMap" type="com.babybus.common.model.material.Competition" extends="materialResultMap">
         <result property="compName" column="comp_name" />
-        <result property="level" column="level" />
+        <result property="level" column="comp_level" />
         <result property="awardTime" column="award_time" />
         <result property="ranking" column="ranking" />
         <result property="award" column="award" />
