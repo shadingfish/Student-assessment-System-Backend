@@ -3,6 +3,7 @@ package com.babybus.wangdy55.controller;
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.user.Student;
 import com.babybus.common.service.StudentService;
+import com.babybus.wangdy55.controller.vo.SummaryVo;
 import com.babybus.wangdy55.model.Summary;
 import com.babybus.wangdy55.service.SummaryService;
 import com.babybus.yudingyi.util.JwtTokenUtil;
@@ -24,19 +25,21 @@ public class SummaryController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @ApiOperation("插入个人学年总结")
+    @ApiOperation("提交个人学年总结")
     @PostMapping
-    public CommonResult<?> insertSummary(@RequestBody Summary summary) {
+    public CommonResult<?> summitSummary(@RequestHeader("Authorization") String accessToken, @RequestBody SummaryVo summaryVo) {
         try {
             // 将用户信息保存到数据库
-            Integer affected = summaryService.insertSummary(summary);
+            String cardId = jwtTokenUtil.getUsernameFromToken(accessToken);
+            Student student = studentService.getStudentByCardId(cardId);
+            Integer affected = summaryService.summitSummary(student, summaryVo);
             if (affected == 0) {
-                return CommonResult.error(200,"插入失败");
+                return CommonResult.error(501,"提交失败");
             }
-            return CommonResult.success(null, "插入成功");
+            return CommonResult.success(null, "提交成功");
         } catch (Exception e) {
             System.out.println(e.toString());
-            return CommonResult.error(500,"插入失败");
+            return CommonResult.error(500,"提交失败");
         }
     }
 
@@ -56,9 +59,11 @@ public class SummaryController {
 
     @ApiOperation("根据学生ID获取个人学年总结")
     @GetMapping
-    public CommonResult<?> getSummary(@RequestParam Integer stuId) {
+    public CommonResult<?> getSummary(@RequestHeader("Authorization") String accessToken) {
         try {
-            Summary summary = summaryService.getSummaryById(stuId);
+            String cardId = jwtTokenUtil.getUsernameFromToken(accessToken);
+            Integer stuId = studentService.getStudentByCardId(cardId).getId();
+            Summary summary = summaryService.getSummaryByStuId(stuId, "2022-2023");
             if (summary != null) {
                 return CommonResult.success(summary, "获取成功");
             } else {

@@ -9,7 +9,7 @@
         <result column="health_sum" property="healthSum"/>
     </resultMap>
     <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
-        <id column="id" property="id" />
+        <id column="id" property="matId" />
         <result column="stu_id" property="stuId" />
         <result column="ac_year" property="acYear" />
         <result column="file_url" property="fileUrl" />
@@ -18,7 +18,7 @@
 
     <insert id="insertSummary" parameterType="com.babybus.wangdy55.model.Summary">
         <!-- Set the generated keys to the id property -->
-        <selectKey keyProperty="id" resultType="int" order="AFTER">
+        <selectKey keyProperty="matId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO summaries (
@@ -28,8 +28,8 @@
             #{politicSum}, #{behaveSum}, #{studySum}, #{healthSum})
     </insert>
 
-    <select id="getSummaryById" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
-        SELECT * FROM summaries WHERE stu_id = #{id} AND ac_year = #{acYear}
+    <select id="getSummaryByStuId" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
+        SELECT * FROM summaries WHERE stu_id = #{stuId} AND ac_year = #{acYear}
     </select>
 
     <select id="getSummaryList" resultType="com.babybus.wangdy55.model.Summary" resultMap="summaryResultMap">
@@ -40,11 +40,11 @@
         UPDATE summaries
         SET file_url = #{fileUrl},
             politic_sum = #{politicSum}, behave_sum = #{behaveSum}, study_sum = #{studySum}, health_sum = #{healthSum}
-        WHERE id = #{id}
+        WHERE id = #{matId}
     </update>
 
     <delete id="deleteSummaryById" parameterType="int">
-        DELETE FROM summaries WHERE id = #{id}
+        DELETE FROM summaries WHERE id = #{matId}
     </delete>
 
     <resultMap id="summaryDtoResultMap" type="com.babybus.wangdy55.model.DTO.SummaryDto">

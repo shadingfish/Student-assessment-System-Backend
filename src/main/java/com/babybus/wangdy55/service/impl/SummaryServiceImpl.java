@@ -1,5 +1,7 @@
 package com.babybus.wangdy55.service.impl;
 
+import com.babybus.common.model.user.Student;
+import com.babybus.wangdy55.controller.vo.SummaryVo;
 import com.babybus.wangdy55.mapper.SummaryMapper;
 import com.babybus.wangdy55.model.DTO.SummaryDto;
 import com.babybus.wangdy55.model.Summary;
@@ -14,14 +16,30 @@ public class SummaryServiceImpl implements SummaryService {
     @Autowired
     private SummaryMapper summaryMapper;
 
-    public Integer insertSummary(Summary summary) {
+    // 提交个人学年总结
+    public Integer summitSummary(Student student, SummaryVo summaryVo) {
+        Summary foundSummary = summaryMapper.getSummaryByStuId(student.getId(), "2022-2023");
+
+        Summary summary = new Summary();
+        // 修改 Summary 对应的用户信息
+        summary.setStuId(student.getId());
+        // 修改 Summary 的各模块内容
+        summary.setBehaveSum(summaryVo.getBehaveSum());
+        summary.setHealthSum(summaryVo.getHealthSum());
+        summary.setStudySum(summaryVo.getStudySum());
+        summary.setPoliticSum(summaryVo.getPoliticSum());
+
+        if (foundSummary != null) {
+            summary.setMatId(foundSummary.getMatId());
+            return summaryMapper.updateSummary(summary);
+        }
         return summaryMapper.insertSummary(summary);
+    }
+    public Summary getSummaryByStuId(Integer stuId, String acYear) {
+        return summaryMapper.getSummaryByStuId(stuId, acYear);
     }
     public List<Summary> getSummaryList(Integer stuId, String acYear) {
         return summaryMapper.getSummaryList(stuId, acYear);
-    }
-    public Summary getSummaryById(Integer id) {
-        return summaryMapper.getSummaryById(id);
     }
     public Integer updateSummary(Summary summary) throws Exception {
         try {

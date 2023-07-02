@@ -24,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
 
         rawList.forEach(menu -> {
             // 若该菜单为一级菜单（组件名为 layout）
-            if (menu.getComponent().equals("layout")) {
+            if (menu.getComponent().equals("/layout")) {
                 resList.add(menu);
                 parentChildren.put(menu.getPath(), new ArrayList<>());
             } else {

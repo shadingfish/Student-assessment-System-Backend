@@ -34,7 +34,7 @@ public class EvalResultController {
     }
 
     @ApiOperation("根据学生ID和学年，获取学生综测成绩")
-    @GetMapping("/get")
+    @GetMapping
     public CommonResult<?> getEvalResult(@RequestParam Integer stuId, @RequestParam String acYear) {
         try {
             EvalResult evalResult = evalResultService.getEvalResult(stuId, acYear);
@@ -51,7 +51,7 @@ public class EvalResultController {
     }
 
     @ApiOperation("获取学生综测成绩列表")
-    @GetMapping("/get-list")
+    @GetMapping("/list")
     public CommonResult<?> getEvalResultList(@RequestParam String scholarship, @RequestParam String acYear) {
         try {
             List<EvalResult> evalResultList = evalResultService.getEvalResultList(scholarship, acYear);

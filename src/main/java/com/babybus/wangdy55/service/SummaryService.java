@@ -1,5 +1,7 @@
 package com.babybus.wangdy55.service;
 
+import com.babybus.common.model.user.Student;
+import com.babybus.wangdy55.controller.vo.SummaryVo;
 import com.babybus.wangdy55.mapper.SummaryMapper;
 import com.babybus.wangdy55.model.DTO.SummaryDto;
 import com.babybus.wangdy55.model.Summary;
@@ -11,9 +13,10 @@ import java.util.List;
 @Service
 public interface SummaryService {
 
-    Integer insertSummary(Summary summary);
+    // 提交个人学年总结
+    Integer summitSummary(Student student, SummaryVo summaryVo);
+    Summary getSummaryByStuId(Integer stuId, String acYear);
     List<Summary> getSummaryList(Integer stuId, String acYear);
-    Summary getSummaryById(Integer id);
     Integer updateSummary(Summary summary) throws Exception;
     Integer deleteSummaryById(Integer id);
 

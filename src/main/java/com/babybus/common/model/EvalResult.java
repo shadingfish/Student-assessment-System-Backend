@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class EvalResult {
-    private int perfId;
+    private int id;
     private int stuId;
     private String cardId;
     @Length(min=9,max=9,message = "请输入正确的格式，例如：2022-2023")
