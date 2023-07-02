@@ -2,6 +2,7 @@ package com.babybus.common.controller.material;
 
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.material.Occupation;
+import com.babybus.common.model.user.Student;
 import com.babybus.common.service.StudentService;
 import com.babybus.common.service.material.OccupationService;
 import com.babybus.yudingyi.util.JwtTokenUtil;
@@ -25,8 +26,15 @@ public class OccupationController {
 
     @ApiOperation("插入学生岗位任职记录")
     @PostMapping("/insert")
-    public CommonResult<?> insertOccupation(@RequestBody Occupation occupation) {
+    public CommonResult<?> insertOccupation(@RequestBody Occupation occupation,@RequestHeader("Authorization")String token) {
         try {
+            String cardId=jwtTokenUtil.getUsernameFromToken(token);
+            occupation.setCardId(cardId);
+            Student student=studentService.getStudentByCardId(cardId);
+            occupation.setEvalStatus("待审核");
+            occupation.setMatType("学生岗位");
+            occupation.setStuId(student.getId());
+            System.out.println(occupation);
             // 将用户信息保存到数据库
             Integer affected = occupationService.insertOccupation(occupation);
             if (affected == 0) {

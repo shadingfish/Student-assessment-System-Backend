@@ -32,7 +32,7 @@ public class CompetitionController {
             competition.setCardId(cardId);
             Student student=studentService.getStudentByCardId(cardId);
             competition.setStuId(student.getId());
-            competition.setEvalStatus("未评审");
+            competition.setEvalStatus("待审核");
             competition.setMatType("竞赛获奖");
             System.out.println(competition);
 

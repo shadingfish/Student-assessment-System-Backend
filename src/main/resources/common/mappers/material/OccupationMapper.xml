@@ -25,9 +25,9 @@
         <selectKey keyProperty="matId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO occupation (stu_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
-            depart, level, occupation, start_date, end_date)
-        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, #{submitTime}, #{evalTime},
+        INSERT INTO occupation (stu_id, judge_id, card_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
+            depart, depart_level, occupation, start_date, end_date)
+        VALUES (#{stuId}, #{judgeId}, #{cardId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
             #{depart}, #{level}, #{occupation}, #{startDate}, #{endDate})
     </insert>
 
