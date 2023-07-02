@@ -22,8 +22,8 @@ public class ResearchService {
         return  researchMapper.checkResearch();
     }
 
-    public List<ReturnResearch> getResearchList(int stu_id){
-        return  researchMapper.getResearchList(stu_id);
+    public List<Research> getResearchList(int id){
+        return  researchMapper.getResearchList(id);
     };
 
     public int giveResearchScore(int stu_id, int research_score){

@@ -46,7 +46,7 @@
     <select id="getStudentByCardId"  resultMap="studentResultMap">
         SELECT *
         FROM students
-        WHERE id = #{id}
+        WHERE card_id = #{cardId}
     </select>
 
     <update id="updateStudent" parameterType="com.babybus.common.model.user.Student">

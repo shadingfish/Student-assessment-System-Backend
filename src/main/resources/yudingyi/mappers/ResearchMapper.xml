@@ -3,34 +3,30 @@
 
 <mapper namespace="com.babybus.yudingyi.mapper.ResearchMapper">
 
-    <resultMap id="summaryResultMap" type="com.babybus.yudingyi.model.Research">
+    <resultMap id="researchResultMap" type="com.babybus.yudingyi.model.Research">
         <!-- 手动映射父类的属性 -->
-        <result column="mat_id" property="matId"/>
+        <result column="id" property="id"/>
         <result column="stu_id" property="stuId"/>
-        <result column="judge_id" property="judgeId"/>
+        <result column="card_id" property="cardId"/>
         <result column="ac_year" property="acYear"/>
         <result column="mat_type" property="matType"/>
-        <result column="eval_status" property="evalStatus"/>
-        <result column="remark" property="remark"/>
-        <result column="file_url" property="fileUrl"/>
         <result column="submit_time" property="submitTime"/>
-        <result column="eval_time" property="evalTime"/>
+        <result column="file_url" property="fileUrl"/>
         <!-- 手动映射子类特有的属性 -->
-        <result column="name" property="name"/>
-        <result column="output_name" property="output_name"/>
-        <result column="output_type" property="output_type"/>
+        <result column="file_name" property="fileName"/>
+        <result column="output_name" property="outputName"/>
+        <result column="output_type" property="outputType"/>
         <result column="category" property="category"/>
-        <result column="ranking" property="ranking"/>
-        <result column="level" property="level"/>
-        <result column="output_time" property="output_time"/>
+        <result column="description" property="description"/>
+        <result column="output_time" property="outputTime"/>
     </resultMap>
 
 
     <insert id="storeResReq" parameterType="java.util.List">
-        INSERT INTO research_achievement (stu_id, ac_year, output_name, output_type, category, ranking, level, output_time, name, file_url)
+        INSERT INTO research_achievements (stu_id, card_id, ac_year, output_name, output_type, category, output_time, file_name, file_url, description)
         VALUES
         <foreach item="item" collection="list" separator=",">
-            (#{item.stuId}, #{item.acYear}, #{item.output_name}, #{item.output_type}, #{item.category}, #{item.ranking}, #{item.level}, #{item.output_time}, #{item.name}, #{item.fileUrl})
+            (#{item.stuId}, #{item.cardId}, #{item.acYear}, #{item.outputName}, #{item.outputType}, #{item.category}, #{item.outputTime}, #{item.fileName}, #{item.fileUrl}, #{item.description})
         </foreach>
     </insert>
 
@@ -41,18 +37,18 @@
                  JOIN student s ON e.card_id = s.card_id
     </select>
 
-    <select id="getResearchList" parameterType="int" resultType="com.babybus.yudingyi.model.DTO.Research.ReturnResearch">
-        SELECT mat_id, output_name, output_type, category, ranking, level, DATE_FORMAT(output_time, '%Y-%m-%d') AS output_time, DATE_FORMAT(submit_time, '%Y-%m-%d') AS submit_time, eval_status, file_url FROM research_achievement WHERE stu_id = #{stu_id}
+    <select id="getResearchList" parameterType="int" resultMap="researchResultMap">
+        SELECT * FROM research_achievements WHERE stu_id = #{id}
     </select>
 
     <update id="giveResearchScore" parameterType="int">
-        UPDATE eval_result
-        SET research_score = #{research_score}
-        WHERE stu_id = #{stu_id}
+        UPDATE eval_results
+        SET research_score = #{researchScore}
+        WHERE stu_id = #{stuId}
     </update>
 
     <delete id="deleteResearch" parameterType="int">
-        DELETE FROM research_achievement WHERE mat_id = #{mat_id}
+        DELETE FROM research_achievements WHERE mat_id = #{mat_id}
     </delete>
 
     <select id="retrieveResearch" parameterType="int" resultType="com.babybus.yudingyi.model.Research">
@@ -62,6 +58,6 @@
                DATE_FORMAT(output_time, '%Y-%m-%d') AS output_time,
                DATE_FORMAT(submit_time, '%Y-%m-%d') AS submit_time,
                eval_status, remark, name, file_url, eval_time, judge_id
-        FROM research_achievement WHERE stu_id = #{stu_id}
+        FROM research_achievements WHERE stu_id = #{stu_id}
     </select>
 </mapper>

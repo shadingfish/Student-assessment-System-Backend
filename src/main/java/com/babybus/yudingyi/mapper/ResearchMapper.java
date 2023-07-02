@@ -14,7 +14,7 @@ import java.util.List;
 public interface ResearchMapper {
     int storeResReq(List<Research> res_list);
     List<CheckResearch> checkResearch();
-    List<ReturnResearch> getResearchList(@Param("stu_id") int stu_id);
+    List<Research> getResearchList(@Param("id") int id);
     int giveResearchScore(@Param("stu_id") int stu_id, @Param("research_score") int research_score);
     int deleteResearch(@Param("mat_id") int mat_id);
     List<Research> retrieveResearch(@Param("stu_id") int stu_id);

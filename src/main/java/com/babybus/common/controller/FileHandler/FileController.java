@@ -29,6 +29,7 @@ public class FileController {
             return CommonResult.error(500,"failed to upload File");
         }
     }
+
     @DeleteMapping("/{filePath}")
     public CommonResult<?> deleteFile(@PathVariable String filePath) {
         try {

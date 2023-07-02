@@ -1,10 +1,13 @@
 package com.babybus.yudingyi.controller;
 
+import com.babybus.yudingyi.config.WebConfig;
 import com.babybus.yudingyi.service.RedisService;
 import com.babybus.yudingyi.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@Import(WebConfig.class)
 @WebFilter(urlPatterns = "/admin-api/user/*")
 public class MyFilter implements Filter {
 
@@ -47,6 +51,13 @@ public class MyFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        System.out.println("请求方法：" + httpRequest.getMethod());
+        // 如果是OPTIONS请求，直接放行
+        if (httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         // 在此处执行过滤器逻辑
         System.out.println("=====doFilter=====");
 
@@ -64,6 +75,9 @@ public class MyFilter implements Filter {
                 "/auth/facultyRegister",
                 "/auth/captcha",
                 "/favicon.ico",
+                "/file/upload",
+                "/research/insert",
+                "/research/mylist",
         };
 
         //判断本次请求是否需要处理, 如果不需要处理，则直接放行
@@ -74,33 +88,6 @@ public class MyFilter implements Filter {
             return;
         }
 
-//        List<BigInteger> roleList = userMapper.findRole(new BigInteger(user_id));
-//
-//        Set<BigInteger> permissionCode = new HashSet<>();
-//
-//        for (BigInteger s : roleList) {
-//            permissionCode.add(userMapper.getPermissionInfo(s));
-//        }
-//
-//        List<String> roles = new ArrayList<>();
-//        for (BigInteger role : roleList) {
-//            roles.add(userMapper.getRoleName(role));
-//        }
-//
-//        Set<String> permissions = new HashSet<>();
-//        for (BigInteger code : permissionCode) {
-//            permissions.add(userMapper.getPermissions(code));
-//        }
-//
-//        // 根据用户角色进行权限判断
-//        if (permissions.contains(node)) {
-//            // 用户具有读取权限，继续处理请求
-//            chain.doFilter(httpRequest, httpResponse);
-//        } else {
-//            // 用户没有足够的权限，返回错误信息或者进行相应的拦截处理
-//            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//            httpResponse.getWriter().write("Insufficient permissions");
-//        }
 
         // 解析Authorization请求头中的JWT令牌 Bearer access_token
         String cardId = jwtTokenUtil.getUsernameFromToken(token);

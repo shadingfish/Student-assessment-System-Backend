@@ -38,7 +38,7 @@ public class LocalFileController {
         return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @CrossOrigin
     @PostMapping("/upload")
     public CommonResult<?> upload(MultipartFile file){
         System.out.println("正在上传文件：" + file.getOriginalFilename());
