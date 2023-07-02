@@ -49,7 +49,7 @@ server:
 
 # MyBatis 配置
 mybatis:
-  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml
+  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml, classpath:common/material/*.xml
 
 jwt:
   # openssl rand -base64 256

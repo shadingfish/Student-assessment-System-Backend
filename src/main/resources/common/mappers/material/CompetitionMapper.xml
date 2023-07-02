@@ -40,6 +40,11 @@
         SELECT * FROM competition WHERE stu_id = #{stuId}
     </select>
 
+
+    <select id="getCompetitionListByCardId" resultType="com.babybus.common.model.material.Competition" resultMap="competitionResultMap">
+        SELECT * FROM competition WHERE card_id = #{card_id}
+    </select>
+
     <update id="updateCompetition" parameterType="com.babybus.common.model.material.Competition">
         UPDATE competition
         SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear}, mat_type = #{matType},
