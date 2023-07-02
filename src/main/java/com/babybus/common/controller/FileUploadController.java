@@ -55,9 +55,10 @@ public class FileUploadController {
             String filePath = uploadPath + File.separator + fileName;
             File dest = new File(filePath);
             file.transferTo(dest);
+            System.out.println(filePath);
 
             // 将文件名保存到数据库中
-            return "文件上传成功";
+            return filePath;
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("文件上传失败");

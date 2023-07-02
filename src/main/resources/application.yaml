@@ -57,9 +57,9 @@ jwt:
   access_token:
     expiration: 3600
   refresh_token:
-    expiration: 604800
+    expiration: 6048000
 
 file:
-  upload-path: G:/storage/
+  upload-path: G:/storage
   allowed-types: jpg,png
   max-size: 10485760   # 10MB

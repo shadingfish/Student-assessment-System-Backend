@@ -2,15 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.babybus.common.mapper.material.OccupationMapper">
-    <resultMap id="occupationResultMap" type="com.babybus.common.model.material.Occupation" extends="materialResultMap">
+    <resultMap id="occupationResultMap" type="com.babybus.common.model.material.Occupation">
         <result property="depart" column="depart"/>
-        <result property="level" column="level"/>
+        <result property="level" column="depart_level"/>
         <result property="occupation" column="occupation"/>
         <result property="startDate" column="start_date" javaType="java.util.Date"/>
         <result property="endDate" column="end_date" javaType="java.util.Date"/>
-    </resultMap>
-    <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
         <result column="mat_id" property="matId" />
+        <result column="card_id" property="cardId" />
         <result column="stu_id" property="stuId" />
         <result column="judge_id" property="judgeId" />
         <result column="ac_year" property="acYear" />
@@ -44,7 +43,7 @@
         UPDATE occupation
         SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear}, mat_type = #{matType},
             eval_status = #{evalStatus}, remark = #{remark}, file_url = #{fileUrl}, submit_time = #{submitTime}, eval_time = #{evalTime},
-            depart = #{depart}, level = #{level}, occupation = #{occupation}, start_date = #{startDate}, end_date = #{endDate}
+            depart = #{depart}, depart_level = #{level}, occupation = #{occupation}, start_date = #{startDate}, end_date = #{endDate}
         WHERE mat_id = #{matId}
     </update>
 
