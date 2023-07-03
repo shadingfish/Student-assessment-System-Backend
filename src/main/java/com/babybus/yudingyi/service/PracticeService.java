@@ -1,7 +1,8 @@
-package com.babybus.common.service.material;
+package com.babybus.yudingyi.service;
 
-import com.babybus.common.mapper.material.PracticeMapper;
-import com.babybus.common.model.material.Practice;
+import com.babybus.yudingyi.mapper.PracticeMapper;
+import com.babybus.yudingyi.model.DTO.Check;
+import com.babybus.yudingyi.model.Practice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,10 @@ public class PracticeService {
     public Integer deletePracticeById(Integer matId) {
         return practiceMapper.deletePracticeById(matId);
     }
+    public List<Check> checkPractice(int id){
+        return  practiceMapper.checkPractice(id);
+    }
+    public int givePracticeScore(int stu_id, int research_score){
+        return  practiceMapper.givePracticeScore(stu_id, research_score);
+    };
 }

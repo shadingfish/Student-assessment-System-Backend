@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.yudingyi.mapper.PracticeMapper">
+    <resultMap id="practiceResultMap" type="com.babybus.yudingyi.model.Practice">
+        <!-- 手动映射子类特有的属性 -->
+        <result property="pracType" column="prac_type"/>
+        <result property="startDate" column="start_date" javaType="java.util.Date"/>
+        <result property="endDate" column="end_date" javaType="java.util.Date"/>
+        <!-- 手动映射父类的属性 -->
+        <result column="id" property="id"/>
+        <result column="stu_id" property="stuId"/>
+        <result column="card_id" property="cardId"/>
+        <result column="ac_year" property="acYear"/>
+        <result column="mat_type" property="matType"/>
+        <result column="file_url" property="fileUrl"/>
+        <result column="submit_time" property="submitTime"/>
+    </resultMap>
+
+<!--    <insert id="insertPractice" parameterType="com.babybus.yudingyi.model.Practice">-->
+<!--        <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">-->
+<!--            SELECT id FROM practices WHERE id = #{id}-->
+<!--        </selectKey>-->
+<!--        <if test="id != null">-->
+<!--            UPDATE practices-->
+<!--            SET stu_id = #{stuId}, card_id = #{cardId}, ac_year = #{acYear}, mat_type = #{matType},-->
+<!--            submit_time = #{submitTime}, file_url = #{fileUrl}, prac_type = #{pracType},-->
+<!--            start_date = #{startDate}, end_date = #{endDate}-->
+<!--            WHERE id = #{id}-->
+<!--        </if>-->
+<!--        <if test="id == null">-->
+<!--            INSERT INTO practices (stu_id, card_id, ac_year, mat_type, file_url, prac_type, start_date, end_date)-->
+<!--            VALUES (#{stuId}, #{cardId}, #{acYear}, #{matType}, #{fileUrl}, #{pracType}, #{startDate}, #{endDate})-->
+<!--        </if>-->
+<!--    </insert>-->
+
+    <insert id="insertPractice" parameterType="com.babybus.yudingyi.model.Practice">
+        INSERT INTO practices (stu_id, card_id, ac_year, mat_type, file_url, prac_type, start_date, end_date)
+        VALUES (#{stuId}, #{cardId}, #{acYear}, #{matType}, #{fileUrl}, #{pracType}, #{startDate}, #{endDate})
+            ON DUPLICATE KEY UPDATE
+                                 stu_id = VALUES(stu_id),
+                                 card_id = VALUES(card_id),
+                                 ac_year = VALUES(ac_year),
+                                 mat_type = VALUES(mat_type),
+                                 file_url = VALUES(file_url),
+                                 prac_type = VALUES(prac_type),
+                                 start_date = VALUES(start_date),
+                                 end_date = VALUES(end_date)
+    </insert>
+
+
+    <select id="getPracticeById" resultMap="practiceResultMap">
+        SELECT * FROM practices WHERE id = #{matId}
+    </select>
+
+    <select id="getPracticeList" resultMap="practiceResultMap">
+        SELECT * FROM practices WHERE stu_id = #{stuId}
+    </select>
+
+    <update id="updatePractice" parameterType="com.babybus.yudingyi.model.Practice">
+        UPDATE practices
+        SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear}, mat_type = #{matType},
+            eval_status = #{evalStatus}, remark = #{remark}, file_url = #{fileUrl}, submit_time = #{submitTime}, eval_time = #{evalTime},
+            prac_type = #{pracType}, start_date = #{startDate}, end_date = #{endDate}
+        WHERE mat_id = #{matId}
+    </update>
+
+    <delete id="deletePracticeById">
+        DELETE FROM practices WHERE id = #{matId}
+    </delete>
+
+    <select id="checkPractice" resultType="com.babybus.yudingyi.model.DTO.Check">
+        SELECT e.ac_year, e.score, e.eval_status, s.id, s.card_id, s.name, s.school, s.grade, s.major
+        FROM eval_records e
+        JOIN students s ON e.stu_card_id = s.card_id
+        WHERE e.judge_id = #{id}
+    </select>
+
+    <update id="givePracticeScore" parameterType="int">
+        UPDATE eval_results
+        SET practice_score = #{practice_score}
+        WHERE stu_id = #{stu_id}
+    </update>
+</mapper>
