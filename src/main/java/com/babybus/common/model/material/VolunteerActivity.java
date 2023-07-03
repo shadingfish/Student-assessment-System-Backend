@@ -10,6 +10,8 @@ import java.sql.Date;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "志愿服务活动")
 public class VolunteerActivity extends Material{
+    String matType = "志愿服务";
+
     private Date activityTime;
     private String activityName;
     private String depart;

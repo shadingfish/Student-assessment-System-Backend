@@ -23,12 +23,12 @@ spring:
       #允许出现单引号
       allow_single_quotes: true
   datasource:
-    url: jdbc:mysql://localhost:3306/stu_eval
-    username: babybus
-    password: agiledev
-#    url: jdbc:mysql://43.142.90.238:3306/stu_eval
-#    username: stu_eval
-#    password: H8mJdcDzjPxMynMM
+#    url: jdbc:mysql://localhost:3306/stu_eval
+#    username: babybus
+#    password: agiledev
+    url: jdbc:mysql://43.142.90.238:3306/stu_eval
+    username: stu_eval
+    password: H8mJdcDzjPxMynMM
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
