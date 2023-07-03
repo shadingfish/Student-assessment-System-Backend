@@ -2,16 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.babybus.common.mapper.material.CompetitionMapper">
-    <resultMap id="competitionResultMap" type="com.babybus.common.model.material.Competition" extends="materialResultMap">
+    <resultMap id="competitionResultMap" type="com.babybus.common.model.material.Competition">
         <result property="compName" column="comp_name" />
-        <result property="level" column="level" />
+        <result property="level" column="comp_level" />
         <result property="awardTime" column="award_time" />
         <result property="ranking" column="ranking" />
         <result property="award" column="award" />
-    </resultMap>
-    <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
+<!--    </resultMap>
+    <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">-->
         <result column="mat_id" property="matId" />
         <result column="stu_id" property="stuId" />
+        <result column="card_id" property="cardId" />
         <result column="judge_id" property="judgeId" />
         <result column="ac_year" property="acYear" />
         <result column="mat_type" property="matType" />
@@ -26,9 +27,9 @@
         <selectKey keyProperty="matId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO competition (stu_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
-            comp_name, level, award_time, ranking, award)
-        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, #{submitTime}, #{evalTime},
+        INSERT INTO competition (stu_id, card_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
+            comp_name, comp_level, award_time, ranking, award)
+        VALUES (#{stuId}, #{cardId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
             #{compName}, #{level}, #{awardTime}, #{ranking}, #{award})
     </insert>
 
@@ -40,11 +41,16 @@
         SELECT * FROM competition WHERE stu_id = #{stuId}
     </select>
 
+
+    <select id="getCompetitionListByCardId" resultType="com.babybus.common.model.material.Competition" resultMap="competitionResultMap">
+        SELECT * FROM competition WHERE card_id = #{card_id}
+    </select>
+
     <update id="updateCompetition" parameterType="com.babybus.common.model.material.Competition">
         UPDATE competition
         SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear}, mat_type = #{matType},
             eval_status = #{evalStatus}, remark = #{remark}, file_url = #{fileUrl}, submit_time = #{submitTime}, eval_time = #{evalTime},
-            comp_name = #{compName}, level = #{level}, award_time = #{awardTime}, ranking = #{ranking}, award = #{award}
+            comp_name = #{compName}, comp_level = #{level}, award_time = #{awardTime}, ranking = #{ranking}, award = #{award}
         WHERE mat_id = #{matId}
     </update>
 

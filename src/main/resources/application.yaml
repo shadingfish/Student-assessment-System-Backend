@@ -23,12 +23,12 @@ spring:
       #允许出现单引号
       allow_single_quotes: true
   datasource:
-#    url: jdbc:mysql://localhost:3306/stu_eval
-#    username: babybus
-#    password: agiledev
-    url: jdbc:mysql://43.142.90.238:3306/stu_eval
-    username: stu_eval
-    password: H8mJdcDzjPxMynMM
+    url: jdbc:mysql://localhost:3306/stu_eval
+    username: root
+    password: 123456
+#    url: jdbc:mysql://43.142.90.238:3306/agilesoftware
+#    username: agilesoftware
+#    password: nxCHCcT8BY34aMzE
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
@@ -46,7 +46,7 @@ server:
 
 # MyBatis 配置
 mybatis:
-  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml
+  mapper-locations: classpath:common/mappers/*.xml, classpath:wangdy55/mappers/*.xml, classpath:wuqile/mappers/*.xml, classpath:yudingyi/mappers/*.xml, classpath:common/mappers/material/*.xml
 
 jwt:
   # openssl rand -base64 256
@@ -54,4 +54,15 @@ jwt:
   access_token:
     expiration: 3600
   refresh_token:
-    expiration: 604800
+    expiration: 6048000
+
+file:
+#<<<<<<< master
+#  upload-path: /home/ubuntu/image
+#  allowed-types: jpg,png
+#=======
+#  upload-path: G:/storage/
+  upload-path: D:/storage/
+  allowed-types: jpg,png,pdf,docx,txt
+#>>>>>>> master
+  max-size: 10485760   # 10MB

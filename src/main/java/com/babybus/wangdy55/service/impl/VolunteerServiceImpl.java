@@ -29,7 +29,7 @@ public class VolunteerServiceImpl implements VolunteerService {
         volunteerActivity.setFileUrl(date.toString());
 
         volunteerMapper.insertVolunteerActivity(volunteerActivity);
-        return volunteerActivity.getMatId();
+        return volunteerActivity.getId();
     }
 //    public Integer addVolunteerFile(Integer volunteerActivityId, File file) {
 //

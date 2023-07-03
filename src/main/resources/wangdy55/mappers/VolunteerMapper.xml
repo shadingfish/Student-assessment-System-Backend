@@ -18,7 +18,7 @@
 
     <insert id="insertVolunteerActivity" useGeneratedKeys="true" parameterType="com.babybus.common.model.material.VolunteerActivity">
         <!-- Set the generated keys to the id property -->
-        <selectKey keyProperty="matId" resultType="int" order="AFTER">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO volunteer_activities (
@@ -33,7 +33,7 @@
     </select>
 
     <select id="getVolunteerActivityById" resultType="com.babybus.common.model.material.VolunteerActivity" resultMap="VolunteerActivityResultMap">
-        SELECT * FROM volunteer_activities WHERE id = #{matId}
+        SELECT * FROM volunteer_activities WHERE id = #{id}
     </select>
 
 <!--    <update id="updateVolunteerActivity" parameterType="com.babybus.common.model.material.VolunteerActivity">-->
@@ -44,6 +44,6 @@
 <!--    </update>-->
 
     <delete id="deleteVolunteerActivityById" parameterType="int">
-        DELETE FROM volunteer_activities WHERE id = #{matId}
+        DELETE FROM volunteer_activities WHERE id = #{id}
     </delete>
 </mapper>
