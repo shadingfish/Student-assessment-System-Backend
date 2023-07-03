@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface EvalRecordMapper {
     Integer insertEvalRecord(EvalRecord record);
-    List<EvalRecord> getEvalRecordList(String type, Integer judgeId, String acYear);
+    //EvalRecord getEvalRecord(Integer stu_id, Integer)
+    EvalRecord updateEvalRecord(EvalRecord evalRecord);
+    List<EvalRecord> getEvalRecord(String type, Integer judgeId, String acYear);
 }
