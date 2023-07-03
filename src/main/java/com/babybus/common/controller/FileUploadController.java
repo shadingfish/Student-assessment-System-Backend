@@ -66,7 +66,7 @@ public class FileUploadController {
 
             // 将文件名保存到数据库中
             System.out.println(filePath);
-            String fileInfo[] = {oriName, filePath};
+            String fileInfo[] = {oriName, fileName};
             return CommonResult.success(fileInfo, "成功上传");
         } catch (IOException e) {
             e.printStackTrace();
