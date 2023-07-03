@@ -3,6 +3,8 @@ package com.babybus.wuqile.controller;
 import com.babybus.common.mapper.EvalRecordMapper;
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.EvalRecord;
+import com.babybus.common.model.user.Faculty;
+import com.babybus.common.service.FacultyService;
 import com.babybus.wangdy55.service.UserService;
 import com.babybus.yudingyi.mapper.UserMapper;
 import com.babybus.yudingyi.model.User;
@@ -25,6 +27,9 @@ public class EvalRecordController {
     JwtTokenUtil jwtTokenUtil;
     @Autowired
     UserService userService;
+
+    @Autowired
+    FacultyService facultyService;
     @GetMapping("/get")
     public CommonResult<?> getEvalRecord(@RequestHeader("Authorization")String token, @RequestBody String acYear, @RequestBody String type){
         try{
@@ -46,19 +51,21 @@ public class EvalRecordController {
         try{
             String cardId=jwtTokenUtil.getUsernameFromToken(token);
             User user=userService.getUserByCardId(cardId);
-            evalRecord.setJudgeId(user.getId());
+            Faculty faculty=facultyService.getFacultyByCardId(user.getCardId());
+            evalRecord.setJudgeId(faculty.getId());
             System.out.println("获取的评审记录种类： "+evalRecord.getType());
             System.out.println("获取的评审id： "+evalRecord.getJudgeId());
             System.out.println("获取的学年： "+evalRecord.getAcYear());
             List<EvalRecord> evalRecords=evalRecordMapper.getEvalRecord(evalRecord.getType(), evalRecord.getJudgeId(), evalRecord.getAcYear());
             for(EvalRecord ev:evalRecords){
+                System.out.println(ev);
                 if(Objects.equals(ev.getJudgeId(), evalRecord.getJudgeId()) && Objects.equals(ev.getType(), evalRecord.getType()) &&ev.getAcYear().equals(evalRecord.getAcYear()))
                     evalRecord.setId(ev.getId());
             }
             System.out.println(evalRecord);
             if(!(evalRecord.getId() ==null)){
-                EvalRecord evalRecord1=evalRecordMapper.updateEvalRecord(evalRecord);
-                return CommonResult.success(evalRecord1,"修改成功");
+                evalRecordMapper.updateEvalRecord(evalRecord);
+                return CommonResult.success(evalRecord,"修改成功");
             }
             int res=evalRecordMapper.insertEvalRecord(evalRecord);
             return CommonResult.success(res,"插入成功");
@@ -75,8 +82,8 @@ public class EvalRecordController {
             User user=userService.getUserByCardId(cardId);
             evalRecord.setJudgeId(user.getId());
             System.out.println(evalRecord);
-            EvalRecord evalRecord1=evalRecordMapper.updateEvalRecord(evalRecord);
-            return CommonResult.success(evalRecord1,"修改成功");
+            evalRecordMapper.updateEvalRecord(evalRecord);
+            return CommonResult.success(evalRecord,"修改成功");
         }catch(Exception e){
             e.printStackTrace();
             return CommonResult.error(403,"修改失败");

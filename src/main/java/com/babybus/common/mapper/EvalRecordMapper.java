@@ -11,6 +11,6 @@ import java.util.List;
 public interface EvalRecordMapper {
     Integer insertEvalRecord(EvalRecord record);
     //EvalRecord getEvalRecord(Integer stu_id, Integer)
-    EvalRecord updateEvalRecord(EvalRecord evalRecord);
+    void updateEvalRecord(EvalRecord evalRecord);
     List<EvalRecord> getEvalRecord(String type, Integer judgeId, String acYear);
 }
