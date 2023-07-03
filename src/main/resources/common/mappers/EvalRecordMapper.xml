@@ -3,50 +3,50 @@
 
 <mapper namespace="com.babybus.common.mapper.EvalRecordMapper">
     <resultMap id="evalRecordMap" type="com.babybus.common.model.EvalRecord">
-        <id property="id" column="id" />
+        <result property="id" column="id" />
         <result property="stuId" column="stu_id" />
-        <result property="stuCardId" column="stu_card_id" />
-        <result property="stuName" column="stu_name" />
         <result property="judgeId" column="judge_id" />
-        <result property="judgeCardId" column="judge_card_id" />
         <result property="acYear" column="ac_year" />
-        <result property="matType" column="mat_type" />
-        <result property="score" column="score" />
+        <result property="type" column="mat_type" />
         <result property="evalStatus" column="eval_status" />
-        <result property="evalTime" column="eval_time" />
+        <result property="score" column="score" />
+        <result property="eval_time" column="evalTime" />
         <result property="remark" column="remark" />
     </resultMap>
 
+<!--    <insert id="insertEvalRecord" parameterType="com.babybus.common.model.EvalRecord">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO eval_records (stu_id, ac_year, type, eval_time)
+        VALUES (#{stuId}, #{acYear}, #{type}, NULL)
+    </insert>-->
     <insert id="insertEvalRecord" parameterType="com.babybus.common.model.EvalRecord">
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO eval_records (stu_id, stu_card_id, stu_name, judge_id, judge_card_id, ac_year, mat_type, eval_status, score, eval_time, remark)
-        VALUES (#{stuId}, #{stuCardId}, #{stuName}, #{judgeId}, #{judgeCardId}, #{acYear}, #{matType},
-        #{evalStatus}, #{score}, #{evalTime}, #{remark})
+        INSERT INTO eval_records (stu_id, judge_id, ac_year, mat_type, eval_status, score, eval_time, remark)
+        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{type}, #{evalStatus}, #{score}, CURRENT_TIMESTAMP, #{remark})
     </insert>
 
-    <select id="getEvalRecordList" resultMap="evalRecordMap">
-        SELECT stu_id, judge_id, ac_year, type, eval_status, score, eval_time, remark
+
+    <select id="getEvalRecord" resultType="com.babybus.common.model.EvalRecord" resultMap="evalRecordMap">
+        SELECT *
         FROM eval_records
-        WHERE type = #{type}, judge_id = #{judgeId}, ac_year = #{acYear}
+        WHERE  mat_type = #{type}
     </select>
 
     <update id="updateEvalRecord" parameterType="com.babybus.common.model.EvalRecord">
-        UPDATE eval_records
-        SET stu_card_id = #{stuCardId}, judge_card_id = #{judgeCardId}, ac_year = #{acYear},
-            mat_type = #{matType}, eval_status = #{evalStatus}, score = #{score},
-            eval_time = #{evalTime}, remark = #{remark}
-        WHERE stu_id = #{stuId} AND judge_id = #{judgeId}
+        UPDATE eval_records SET
+        stu_id = #{stuId},
+        judge_id = #{judgeId},
+        ac_year = #{acYear},
+        mat_type = #{type},
+        eval_status = #{evalStatus},
+        score = #{score},
+        eval_time = CURRENT_TIMESTAMP,
+        remark = #{remark}
+        WHERE id = #{id}
     </update>
 
-    <select id="getEvalRecord" resultMap="evalRecordMap">
-        SELECT * FROM eval_records
-        WHERE stu_id = #{stuId} AND judge_id = #{judgeId}
-    </select>
-
-    <select id="getEvalByType" resultMap="evalRecordMap">
-        SELECT * FROM eval_records
-        WHERE stu_id = #{stuId} AND mat_type = #{type}
-    </select>
 </mapper>

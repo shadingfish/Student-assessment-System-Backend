@@ -30,7 +30,6 @@ public class FileDownloadController {
             // Handle the error
             e.printStackTrace();
         }
-
         // Handle the error
         return ResponseEntity.badRequest().build();
     }

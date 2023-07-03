@@ -2,7 +2,6 @@ package com.babybus.common.mapper;
 
 import com.babybus.common.model.EvalRecord;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,9 +9,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface EvalRecordMapper {
-    void insertEvalRecord(EvalRecord record);
-    List<EvalRecord> getEvalRecordList(String type, Integer judgeId, String acYear);
-    EvalRecord getEvalRecord(@Param("stuId") Integer stuId, @Param("judgeId") Integer judgeId);
-    EvalRecord getEvalByType(@Param("stuId") Integer stuId, @Param("type") String type);
+    Integer insertEvalRecord(EvalRecord record);
+    //EvalRecord getEvalRecord(Integer stu_id, Integer)
     void updateEvalRecord(EvalRecord evalRecord);
+    List<EvalRecord> getEvalRecord(String type, Integer judgeId, String acYear);
 }
