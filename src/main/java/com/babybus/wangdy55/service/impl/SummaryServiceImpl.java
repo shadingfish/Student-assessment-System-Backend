@@ -30,7 +30,7 @@ public class SummaryServiceImpl implements SummaryService {
         summary.setPoliticSum(summaryVo.getPoliticSum());
 
         if (foundSummary != null) {
-            summary.setMatId(foundSummary.getMatId());
+            summary.setId(foundSummary.getId());
             return summaryMapper.updateSummary(summary);
         }
         return summaryMapper.insertSummary(summary);

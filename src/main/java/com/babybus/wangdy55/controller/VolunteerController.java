@@ -43,10 +43,10 @@ public class VolunteerController {
         }
     }
 
-    @PostMapping("/${targetId}")
-    public CommonResult<?> addVolunteerFile(@RequestHeader("Authorization") String accessToken, @PathVariable("targetId") int targetId, @RequestBody File file) {
-        return CommonResult.success(volunteerService.addVolunteerFile(targetId, file), "上传成功");
-    }
+//    @PostMapping("/${targetId}")
+//    public CommonResult<?> addVolunteerFile(@RequestHeader("Authorization") String accessToken, @PathVariable("targetId") int targetId, @RequestBody File file) {
+//        return CommonResult.success(volunteerService.addVolunteerFile(targetId, file), "上传成功");
+//    }
 
     @ApiOperation("查询个人志愿服务活动列表")
     @GetMapping("/list")
