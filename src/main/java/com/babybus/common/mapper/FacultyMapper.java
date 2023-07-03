@@ -14,6 +14,7 @@ public interface FacultyMapper {
     List<Faculty> getFacultyList();
     Faculty getFacultyById(@Param("userId") Integer userId);
     Faculty getFacultyByCardId(String cardId);
+    List<Faculty> getFacultyByRole(String role);
     Integer updateFaculty(Faculty faculty);
     Integer deleteFacultyById(Integer userId);
 }
