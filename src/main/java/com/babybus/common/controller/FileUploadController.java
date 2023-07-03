@@ -58,7 +58,7 @@ public class FileUploadController {
             System.out.println(filePath);
 
             // 将文件名保存到数据库中
-            return filePath;
+            return fileName;
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("文件上传失败");

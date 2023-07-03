@@ -1,22 +1,26 @@
 package com.babybus.common.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
+@CrossOrigin
 public class FileDownloadController {
-    @GetMapping("/files/{filename}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+    @Value("${file.upload-path}")
+    private String uploadPath;
+    @GetMapping("api/downloadFiles/{path}")
+    public ResponseEntity<Resource> getFile(@PathVariable String path) {
         try {
-            Path file = Paths.get(filename);
+            System.out.println(path);
+            Path file = Paths.get(uploadPath+ File.separator+path);
             Resource resource = new UrlResource(file.toUri());
 
             return ResponseEntity.ok()
