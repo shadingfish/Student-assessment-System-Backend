@@ -9,7 +9,7 @@
         <result column="duration" property="duration"/>
     </resultMap>
     <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
-        <id column="id" property="matId" />
+        <id column="id" property="id" />
         <result column="stu_id" property="stuId" />
         <result column="ac_year" property="acYear" />
         <result column="file_url" property="fileUrl" />
@@ -29,7 +29,7 @@
     </insert>
 
     <select id="getVolunteerActivityList" resultType="com.babybus.common.model.material.VolunteerActivity" resultMap="VolunteerActivityResultMap">
-        SELECT * FROM volunteer_activities WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+        SELECT * FROM volunteer_activities WHERE stu_id = #{stuId} AND ac_year = #{acYear} AND deleted != 1
     </select>
 
     <select id="getVolunteerActivityById" resultType="com.babybus.common.model.material.VolunteerActivity" resultMap="VolunteerActivityResultMap">
@@ -44,6 +44,8 @@
 <!--    </update>-->
 
     <delete id="deleteVolunteerActivityById" parameterType="int">
-        DELETE FROM volunteer_activities WHERE id = #{id}
+        UPDATE volunteer_activities
+        SET deleted = 1
+        WHERE id = #{id}
     </delete>
 </mapper>

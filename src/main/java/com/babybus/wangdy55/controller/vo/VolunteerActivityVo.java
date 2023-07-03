@@ -10,4 +10,5 @@ public class VolunteerActivityVo {
     private String activityName;
     private String depart;
     private Float duration;
+    private String fileUrl;
 }

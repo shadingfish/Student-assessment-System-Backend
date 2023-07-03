@@ -43,11 +43,6 @@ public class VolunteerController {
         }
     }
 
-//    @PostMapping("/${targetId}")
-//    public CommonResult<?> addVolunteerFile(@RequestHeader("Authorization") String accessToken, @PathVariable("targetId") int targetId, @RequestBody File file) {
-//        return CommonResult.success(volunteerService.addVolunteerFile(targetId, file), "上传成功");
-//    }
-
     @ApiOperation("查询个人志愿服务活动列表")
     @GetMapping("/list")
     public CommonResult<?> getSummaryList(@RequestHeader("Authorization") String accessToken) {
@@ -64,7 +59,7 @@ public class VolunteerController {
 
     @ApiOperation("根据 ID 查询志愿服务活动")
     @GetMapping
-    public CommonResult<?> getSummary(@RequestParam Integer id) {
+    public CommonResult<?> getVolunteerActivity(@RequestParam Integer id) {
         try {
             VolunteerActivity volunteerActivity = volunteerService.getVolunteerActivityById(id);
             if (volunteerActivity != null) {
@@ -77,5 +72,11 @@ public class VolunteerController {
             return CommonResult.error(500,"获取失败");
         }
 
+    }
+
+    @ApiOperation("根据 ID 删除志愿服务活动")
+    @DeleteMapping("/{id}")
+    public CommonResult<?> deleteVolunteerActivity(@PathVariable("id") int id) {
+        return CommonResult.success(volunteerService.deleteVolunteerActivityById(id), "删除成功");
     }
 }

@@ -25,15 +25,11 @@ public class VolunteerServiceImpl implements VolunteerService {
         volunteerActivity.setActivityName(volunteerActivityVo.getActivityName());
         volunteerActivity.setDepart(volunteerActivityVo.getDepart());
         volunteerActivity.setDuration(volunteerActivityVo.getDuration());
-        Date date = new Date();
-        volunteerActivity.setFileUrl(date.toString());
+        volunteerActivity.setFileUrl(volunteerActivityVo.getFileUrl());
 
         volunteerMapper.insertVolunteerActivity(volunteerActivity);
         return volunteerActivity.getId();
     }
-//    public Integer addVolunteerFile(Integer volunteerActivityId, File file) {
-//
-//    }
     public List<VolunteerActivity> getVolunteerActivityList(Integer stuId, String acYear) {
         return volunteerMapper.getVolunteerActivityList(stuId, acYear);
     }
