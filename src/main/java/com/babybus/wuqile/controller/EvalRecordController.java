@@ -53,13 +53,13 @@ public class EvalRecordController {
             User user=userService.getUserByCardId(cardId);
             Faculty faculty=facultyService.getFacultyByCardId(user.getCardId());
             evalRecord.setJudgeId(faculty.getId());
-            System.out.println("获取的评审记录种类： "+evalRecord.getType());
+            System.out.println("获取的评审记录种类： "+evalRecord.getMatType());
             System.out.println("获取的评审id： "+evalRecord.getJudgeId());
             System.out.println("获取的学年： "+evalRecord.getAcYear());
-            List<EvalRecord> evalRecords=evalRecordMapper.getEvalRecord(evalRecord.getType(), evalRecord.getJudgeId(), evalRecord.getAcYear());
+            List<EvalRecord> evalRecords=evalRecordMapper.getEvalRecord(evalRecord.getMatType(), evalRecord.getJudgeId(), evalRecord.getAcYear());
             for(EvalRecord ev:evalRecords){
                 System.out.println(ev);
-                if(Objects.equals(ev.getJudgeId(), evalRecord.getJudgeId()) && Objects.equals(ev.getType(), evalRecord.getType()) &&ev.getAcYear().equals(evalRecord.getAcYear()))
+                if(Objects.equals(ev.getJudgeId(), evalRecord.getJudgeId()) && Objects.equals(ev.getMatType(), evalRecord.getMatType()) &&ev.getAcYear().equals(evalRecord.getAcYear()))
                     evalRecord.setId(ev.getId());
             }
             System.out.println(evalRecord);
