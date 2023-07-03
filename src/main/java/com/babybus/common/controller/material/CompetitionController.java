@@ -61,6 +61,17 @@ public class CompetitionController {
         }
     }
 
+    @GetMapping("/get-list-by-cardId")
+    public CommonResult<?> getCompetitionListByCardId(@RequestParam String card_id) {
+        try {
+            List<Competition> competitionList = competitionService.getCompetitionListByCardId(card_id);
+            return CommonResult.success(competitionList, "获取成功");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return CommonResult.error(500,"获取失败");
+        }
+    }
+
     @ApiOperation("根据学生ID和学年获取竞赛获奖记录")
     @GetMapping("/get")
     public CommonResult<?> getCompetitionById(@RequestParam Integer matId) {

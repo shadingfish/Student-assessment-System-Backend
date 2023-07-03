@@ -1,6 +1,7 @@
 package com.babybus.common.controller.material;
 
 import com.babybus.common.model.CommonResult;
+import com.babybus.common.model.material.Competition;
 import com.babybus.common.model.material.Occupation;
 import com.babybus.common.model.user.Student;
 import com.babybus.common.service.StudentService;
@@ -60,7 +61,18 @@ public class OccupationController {
             return CommonResult.error(500,"获取失败");
         }
     }
-
+    @ApiOperation("根据cardId获取学生岗位任职记录列表")
+    @GetMapping("/get-list-by-cardId")
+    public CommonResult<?> getCompetitionListByCardId(@RequestParam String card_id) {
+        try {
+            Student student=studentService.getStudentByCardId(card_id);
+            List<Occupation> occupationList=occupationService.getOccupationList(student.getId());
+            return CommonResult.success(occupationList, "获取成功");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return CommonResult.error(500,"获取失败");
+        }
+    }
     @ApiOperation("根据学生ID和学年获取学生岗位任职记录")
     @GetMapping("/get")
     public CommonResult<?> getOccupationById(@RequestParam Integer matId) {
