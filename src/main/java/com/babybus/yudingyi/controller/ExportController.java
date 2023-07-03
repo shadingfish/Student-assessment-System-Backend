@@ -6,6 +6,7 @@ import com.babybus.yudingyi.model.DTO.Export.AllEvalView;
 import com.babybus.yudingyi.model.DTO.Export.ExportEvalResult;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Api(tags = "数据库导出处理接口")
@@ -55,6 +59,18 @@ public class ExportController {
             List<ExportEvalResult> eval_results = exportService.exportTable(table_name);
             System.out.println(eval_results);
 
+//            // 保存文件到本地的路径和文件名
+//            File outputFile = new File(fileName);
+//            FileOutputStream fos = new FileOutputStream(outputFile);
+//
+//
+//            // Write the Excel data to the file
+//            EasyExcel.write(fos, ExportEvalResult.class)
+//                    .sheet(sheetName)
+//                    .doWrite(eval_results);
+//
+//            System.out.println("成功导出到本地" + fileName);
+
             // Create the Excel file in memory
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             EasyExcel.write(outputStream, ExportEvalResult.class)
@@ -63,9 +79,13 @@ public class ExportController {
 
             // Set the response headers
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDispositionFormData("attachment", fileName);
-            System.out.println("成功导出" + fileName);
+//            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+//            headers.setContentDispositionFormData("attachment", fileName);
+            headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, "UTF-8"));
+            headers.set(HttpHeaders.CONTENT_ENCODING, "UTF-8");
+
+            System.out.println("成功导出到前端" + fileName);
 
             // Return the file content as a response
             return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
