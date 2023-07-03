@@ -41,10 +41,16 @@
         WHERE id = #{id}
     </select>
 
-    <select id="getFacultyByCardId" resultType="com.babybus.common.model.user.Faculty" resultMap="facultyResultMap">
+    <select id="getFacultyByCardId" resultMap="facultyResultMap">
         SELECT *
         FROM faculties
         WHERE card_id = #{cardId}
+    </select>
+
+    <select id="getFacultyByRole" resultMap="facultyResultMap">
+        SELECT *
+        FROM faculties
+        WHERE role = #{role}
     </select>
 
     <update id="updateFaculty" parameterType="com.babybus.common.model.user.Faculty">

@@ -1,6 +1,7 @@
 package com.babybus.common.controller;
 
 
+import com.babybus.common.model.CommonResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -28,37 +29,45 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     @ResponseBody
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public CommonResult<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        System.out.println("开始上传");
         if (file == null || file.isEmpty()) {
-            return "上传文件不能为空";
+            System.out.println("上传文件不能为空");
+            return CommonResult.error(501, "上传文件不能为空");
         }
 
         if (!StringUtils.hasText(uploadPath)) {
-            return "文件上传路径未配置";
+            System.out.println("文件上传路径未配置");
+            return CommonResult.error(502, "文件上传路径未配置");
         }
 
         if (!isFileTypeAllowed(file)) {
-            return "不允许上传该文件类型";
+            System.out.println("不允许上传该文件类型");
+            return CommonResult.error(503, "不允许上传该文件类型");
         }
 
-        if (!isFileContentValid(file)) {
-            return "文件内容不合法";
-        }
+//        if (!isFileContentValid(file)) {
+//            System.out.println("文件内容不合法");
+//            return CommonResult.error(504, "文件内容不合法");
+//        }
 
         if (file.getSize() > maxFileSize) {
-            return "文件大小超过限制";
+            System.out.println("文件大小超过限制");
+            return CommonResult.error(505, "文件大小超过限制");
         }
 
         try {
+            String oriName = file.getOriginalFilename();
             String fileName = generateUniqueFileName(file.getOriginalFilename());
-
             String filePath = uploadPath + File.separator + fileName;
             File dest = new File(filePath);
             file.transferTo(dest);
             System.out.println(filePath);
 
             // 将文件名保存到数据库中
-            return fileName;
+            System.out.println(filePath);
+            String fileInfo[] = {oriName, filePath};
+            return CommonResult.success(fileInfo, "成功上传");
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("文件上传失败");
