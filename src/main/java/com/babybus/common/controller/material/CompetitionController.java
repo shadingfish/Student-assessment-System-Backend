@@ -2,6 +2,8 @@ package com.babybus.common.controller.material;
 
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.material.Competition;
+import com.babybus.common.model.user.Student;
+import com.babybus.common.service.StudentService;
 import com.babybus.common.service.material.CompetitionService;
 import com.babybus.yudingyi.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
@@ -19,11 +21,21 @@ public class CompetitionController {
     private CompetitionService competitionService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private StudentService studentService;
 
     @ApiOperation("插入竞赛获奖记录")
     @PostMapping("/insert")
-    public CommonResult<?> insertCompetition(@RequestBody Competition competition) {
+    public CommonResult<?> insertCompetition(@RequestBody Competition competition,@RequestHeader("Authorization") String token) {
         try {
+            String cardId=jwtTokenUtil.getUsernameFromToken(token);
+            competition.setCardId(cardId);
+            Student student=studentService.getStudentByCardId(cardId);
+            competition.setStuId(student.getId());
+            competition.setEvalStatus("待审核");
+            competition.setMatType("竞赛获奖");
+            System.out.println(competition);
+
             // 将用户信息保存到数据库
             Integer affected = competitionService.insertCompetition(competition);
             if (affected == 0) {
