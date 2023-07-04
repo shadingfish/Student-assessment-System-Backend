@@ -2,8 +2,10 @@ package com.babybus.common.model.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +13,8 @@ import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "学生")
 public class Student extends BaseUser {
@@ -44,9 +48,9 @@ public class Student extends BaseUser {
         this.clas = clas;
         this.major = major;
     }
-
-    public Student() {
-    }
+//
+//    public Student() {
+//    }
 //    // 班级枚举类
 //    enum Clas {
 //        SK1("求知一苑"),

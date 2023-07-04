@@ -3,8 +3,9 @@
 
 <mapper namespace="com.babybus.common.mapper.material.GpaMapper">
     <resultMap id="gpaResultMap" type="com.babybus.common.model.material.Gpa">
-        <result column="gpa_id" property="gpaId" />
+        <result column="id" property="gpaId" />
         <result column="stu_id" property="stuId" />
+        <result column="card_id" property="cardId" />
         <result column="ac_year" property="acYear" />
         <result column="gpa" property="gpa" />
         <result column="ranking" property="ranking" />
@@ -17,20 +18,20 @@
         <selectKey keyProperty="gpaId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO gpa (gpa_id, stu_id, ac_year, gpa, ranking, base, confirm_status, confirm_time)
-        VALUES (#{gpaId}, #{stuId}, #{acYear}, #{gpa}, #{ranking}, #{base}, #{confirmStatus}, #{confirmTime})
+        INSERT INTO gpas (id, stu_id, card_id,ac_year, gpa, ranking, base, confirm_status, confirm_time)
+        VALUES (#{gpaId}, #{stuId}, #{cardId}, #{acYear}, #{gpa}, #{ranking}, #{base}, #{confirmStatus}, #{confirmTime})
     </insert>
 
     <select id="getGpaById" resultType="com.babybus.common.model.material.Gpa" resultMap="gpaResultMap">
-        SELECT * FROM gpa WHERE gpa_id = #{gpaId}
+        SELECT * FROM gpas WHERE id = #{gpaId}
     </select>
 
     <select id="getGpaList" resultType="com.babybus.common.model.material.Gpa" resultMap="gpaResultMap">
-        SELECT * FROM gpa WHERE stu_id = #{stuId}
+        SELECT * FROM gpas WHERE stu_id = #{stuId}
     </select>
 
     <update id="updateGpa" parameterType="com.babybus.common.model.material.Gpa">
-        UPDATE gpa
+        UPDATE gpas
         SET gpa = #{gpa},
             ranking = #{ranking},
             base = #{base},
@@ -40,6 +41,18 @@
     </update>
 
     <delete id="deleteGpaById">
-        DELETE FROM gpa WHERE gpa_id = #{gpaId}
+        DELETE FROM gpas WHERE id = #{gpaId}
     </delete>
+
+    <select id="listGpaPage" resultType="com.babybus.common.model.material.Gpa" resultMap="gpaResultMap">
+        SELECT *
+        FROM gpas
+                 LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="countGpa" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM gpas
+    </select>
+
 </mapper>

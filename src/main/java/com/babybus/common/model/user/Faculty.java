@@ -1,8 +1,10 @@
 package com.babybus.common.model.user;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +12,8 @@ import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Faculty extends BaseUser {
     @ApiModelProperty(value = "部门", required = true, example = "软件与微电子学院")
@@ -24,7 +28,7 @@ public class Faculty extends BaseUser {
         this.depart = depart;
         this.job = job;
     }
-
-    public Faculty() {
-    }
+//
+//    public Faculty() {
+//    }
 }

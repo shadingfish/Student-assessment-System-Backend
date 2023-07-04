@@ -73,4 +73,17 @@
         FROM students
         WHERE id = #{id}
     </delete>
+
+    <select id="listStudentPage" resultMap="studentResultMap">
+        SELECT *
+        FROM students
+                 LIMIT #{start}, #{pageSize}
+    </select>
+
+
+    <select id="countStudent" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM students
+    </select>
+
 </mapper>

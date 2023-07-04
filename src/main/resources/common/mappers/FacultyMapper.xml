@@ -76,4 +76,16 @@
         FROM faculties
         WHERE id = #{id}
     </delete>
+
+    <select id="listFacultyPage" resultType="com.babybus.common.model.user.Faculty" resultMap="facultyResultMap">
+        SELECT *
+        FROM faculties
+                 LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="countFaculty" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM faculties
+    </select>
+
 </mapper>

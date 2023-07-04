@@ -3,10 +3,14 @@ package com.babybus.common.controller.material;
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.material.Gpa;
 import com.babybus.common.service.material.GpaService;
+import com.babybus.wanglingyu.model.GpaImportExcel;
+import com.babybus.wanglingyu.model.PageBean;
+import com.babybus.wanglingyu.util.ExcelUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -90,5 +94,21 @@ public class GpaController {
             System.out.println(e.toString());
             return CommonResult.error(500,"删除失败");
         }
+    }
+
+    @PostMapping("/import")
+    public CommonResult<?> importExcel(MultipartFile file) throws Exception {
+        List<GpaImportExcel> list = ExcelUtils.read(file, GpaImportExcel.class);
+        gpaService.importGpaList(list);
+        return CommonResult.success("ok", "ok");
+    }
+
+    @GetMapping("/page")
+    public CommonResult<?> getPage(@RequestParam(defaultValue = "1") Integer
+                                           page,
+                                   @RequestParam(defaultValue = "10") Integer
+                                           pageSize) {
+        PageBean pageBean = gpaService.getPage(page, pageSize);
+        return CommonResult.success(pageBean, "ok");
     }
 }
