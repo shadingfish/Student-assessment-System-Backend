@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleUserMapper {
 
-    @Insert("INSERT INTO role_user (role_id, card_id) VALUES (#{roleId}, #{cardId})) )")
+    @Insert("INSERT INTO role_user (role_id, card_id) VALUES (#{roleId}, #{cardId})")
     Integer insertRoleUser(int roleId, String cardId);
 //    Integer updateRoleUserByCardId(int roleId, int cardId);
 //    Integer deleteRoleUserByCardId(int cardId);

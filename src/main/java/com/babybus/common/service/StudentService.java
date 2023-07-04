@@ -56,9 +56,9 @@ public class StudentService {
     public PageBean getPage(Integer page, Integer pageSize) {
         Long count = studentMapper.countStudent();
         Integer start = (page - 1) * pageSize;
+
         List<Student> studentList = studentMapper.listStudentPage(start, pageSize);
         PageBean pageBean = new PageBean(count , studentList);
-        System.out.println(pageBean);
         return pageBean;
     }
 
@@ -67,9 +67,11 @@ public class StudentService {
         list.forEach(studentImportExcel -> {
             if (studentImportExcel != null) {
 
+
                 Student student = ImportConvert.excel2student(studentImportExcel);
                 studentMapper.insertStudent(student);
                 Integer studentId = student.getId();
+
 
                 User user = new User();
                 user.setCardId(student.getCardId());

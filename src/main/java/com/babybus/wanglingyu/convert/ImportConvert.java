@@ -40,6 +40,8 @@ public class ImportConvert {
 
         student.setRoleId(1);
         student.setRole("学生");
+        student.setPassword("123456");
+        student.setStatus("正常");
 
         return student;
     }
@@ -70,20 +72,13 @@ public class ImportConvert {
         return faculty;
     }
 
-    public static Gpa excel2gpa(GpaImportExcel gpaImportExcel) {
-        Gpa gpa = new Gpa();
-        gpa.setAcYear(gpaImportExcel.getAcYear());
-        gpa.setGpa(Double.valueOf(gpaImportExcel.getGpa()));
-        gpa.setRanking(Integer.valueOf(gpaImportExcel.getRanking()));
-        gpa.setBase(Integer.valueOf(gpaImportExcel.getBase()));
-        return gpa;
-    }
 
     public static EvalResult excel2result(StudentImportExcel excel) {
         EvalResult evalResult = new EvalResult();
         evalResult.setCardId(excel.getCardId());
         evalResult.setAcYear(excel.getAcYear());
         evalResult.setScholarship(excel.getScholarship());
+        evalResult.setEvalStatus("审核中");
         return evalResult;
     }
 

@@ -123,6 +123,7 @@ public class StudentController {
                                            page,
                                    @RequestParam(defaultValue = "10") Integer
                                            pageSize) {
+
         PageBean pageBean = studentService.getPage(page, pageSize);
         return CommonResult.success(pageBean, "ok");
     }
