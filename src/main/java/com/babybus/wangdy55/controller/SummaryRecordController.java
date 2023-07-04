@@ -37,7 +37,7 @@ public class SummaryRecordController {
 
     @PutMapping
     CommonResult<String> updateSummaryRecord(@RequestBody EvalRecordDto record) {
-        recordService.updateSummaryRecord(record);
+        recordService.submitSummaryRecord(record);
         return CommonResult.success(null, "修改成功");
     }
 }

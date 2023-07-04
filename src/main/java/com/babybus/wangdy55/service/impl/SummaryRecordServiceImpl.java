@@ -22,7 +22,7 @@ public class SummaryRecordServiceImpl implements SummaryRecordService {
         return summaryRecordMapper.getSummaryRecordList(judgeId, acYear);
     }
 
-    public Integer updateSummaryRecord(EvalRecordDto record) {
+    public Integer submitSummaryRecord(EvalRecordDto record) {
         // 查询综合评分结果表，是否有当前学生（cardId）、当前学年的综合评分记录
         EvalResult evalResult = evalResultMapper.getEvalResult(record.getStuId(), "2022-2023");
         // 若有，则更新该记录的个人总结评分

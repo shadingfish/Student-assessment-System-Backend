@@ -5,6 +5,7 @@ import com.babybus.common.model.material.VolunteerActivity;
 import com.babybus.common.model.user.Student;
 import com.babybus.common.service.StudentService;
 import com.babybus.wangdy55.controller.vo.VolunteerActivityVo;
+import com.babybus.wangdy55.service.VolunteerRecordService;
 import com.babybus.wangdy55.service.VolunteerService;
 import com.babybus.yudingyi.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
@@ -21,6 +22,8 @@ import java.util.List;
 public class VolunteerController {
     @Autowired
     private VolunteerService volunteerService;
+    @Autowired
+    private VolunteerRecordService volunteerRecordService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
@@ -43,9 +46,26 @@ public class VolunteerController {
         }
     }
 
+    @ApiOperation("提交志愿服务填报记录")
+    @PostMapping("/submit")
+    public CommonResult<?> submitVolunteerRecord(@RequestHeader("Authorization") String accessToken) {
+        try {
+            String cardId = jwtTokenUtil.getUsernameFromToken(accessToken);
+            Student student = studentService.getStudentByCardId(cardId);
+            Integer affected = volunteerRecordService.submitVolunteerRecord(student.getId());
+            if (affected == 0) {
+                return CommonResult.error(501,"提交失败");
+            }
+            return CommonResult.success(null, "提交成功");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return CommonResult.error(500,"提交失败");
+        }
+    }
+
     @ApiOperation("查询个人志愿服务活动列表")
     @GetMapping("/list")
-    public CommonResult<?> getSummaryList(@RequestHeader("Authorization") String accessToken) {
+    public CommonResult<?> getVolunteerList(@RequestHeader("Authorization") String accessToken) {
         try {
             String cardId = jwtTokenUtil.getUsernameFromToken(accessToken);
             Student student = studentService.getStudentByCardId(cardId);

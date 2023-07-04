@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SummaryRecordService {
     List<SummaryRecordDto> getSummaryRecordList(Integer judgeId, String acYear);
-    Integer updateSummaryRecord(EvalRecordDto record);
+    Integer submitSummaryRecord(EvalRecordDto record);
 }
