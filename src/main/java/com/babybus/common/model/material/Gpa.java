@@ -17,6 +17,6 @@ public class Gpa {
     private Double gpa;
     private Integer ranking;        // 排名
     private Integer base;           // 总人数
-    private Integer confirmStatus;  // 确认状态
+    private String confirmStatus;  // 确认状态
     private Date confirmTime;       // 确认时间
 }

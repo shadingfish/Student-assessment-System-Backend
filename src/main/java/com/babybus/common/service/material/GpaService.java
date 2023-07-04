@@ -55,6 +55,7 @@ public class GpaService {
                 gpa.setGpa(Double.valueOf(gpaImportExcel.getGpa()));
                 gpa.setRanking(Integer.valueOf(gpaImportExcel.getRanking()));
                 gpa.setBase(Integer.valueOf(gpaImportExcel.getBase()));
+                gpa.setConfirmStatus("未确认");
 
                 gpaMapper.insertGpa(gpa);
 
