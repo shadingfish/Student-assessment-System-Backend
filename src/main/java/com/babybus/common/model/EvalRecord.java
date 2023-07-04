@@ -1,11 +1,8 @@
 package com.babybus.common.model;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
