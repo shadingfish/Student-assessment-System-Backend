@@ -1,11 +1,15 @@
 package com.babybus.common.model.user;
 
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(description = "用户")
 public class BaseUser {
     private int id;// 用户 ID
@@ -20,22 +24,22 @@ public class BaseUser {
     private String phone; // 手机号码
     private String email; // 电子邮箱
 
-    public BaseUser(int id, String cardId, String name, String role, int roleId, String password, String status, Date birthday, String gender, String phone, String email) {
-        this.id = id;
-        this.cardId = cardId;
-        this.name = name;
-        this.role = role;
-        this.roleId = roleId;
-        this.password = password;
-        this.status = status;
-        this.birthday = birthday;
-        this.gender = gender;
-        this.phone = phone;
-        this.email = email;
-    }
-
-    public BaseUser() {
-    }
+//    public BaseUser(int id, String cardId, String name, String role, int roleId, String password, String status, Date birthday, String gender, String phone, String email) {
+//        this.id = id;
+//        this.cardId = cardId;
+//        this.name = name;
+//        this.role = role;
+//        this.roleId = roleId;
+//        this.password = password;
+//        this.status = status;
+//        this.birthday = birthday;
+//        this.gender = gender;
+//        this.phone = phone;
+//        this.email = email;
+//    }
+//
+//    public BaseUser() {
+//    }
 
     //    // 用户角色枚举类
 //    enum Chara {
