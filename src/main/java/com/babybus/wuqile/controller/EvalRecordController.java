@@ -4,7 +4,9 @@ import com.babybus.common.mapper.EvalRecordMapper;
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.EvalRecord;
 import com.babybus.common.model.user.Faculty;
+import com.babybus.common.model.user.Student;
 import com.babybus.common.service.FacultyService;
+import com.babybus.common.service.StudentService;
 import com.babybus.wangdy55.service.UserService;
 import com.babybus.yudingyi.mapper.UserMapper;
 import com.babybus.yudingyi.model.User;
@@ -27,6 +29,8 @@ public class EvalRecordController {
     JwtTokenUtil jwtTokenUtil;
     @Autowired
     UserService userService;
+    @Autowired
+    StudentService studentService;
 
     @Autowired
     FacultyService facultyService;
@@ -51,6 +55,7 @@ public class EvalRecordController {
         try{
             String cardId=jwtTokenUtil.getUsernameFromToken(token);
             User user=userService.getUserByCardId(cardId);
+            Student student = studentService.getStudentByCardId(cardId);
             Faculty faculty=facultyService.getFacultyByCardId(user.getCardId());
             evalRecord.setJudgeId(faculty.getId());
             System.out.println("获取的评审记录种类： "+evalRecord.getMatType());
