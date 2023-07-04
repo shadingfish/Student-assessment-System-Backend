@@ -56,6 +56,9 @@ public class EvalRecordController {
             System.out.println("获取的评审记录种类： "+evalRecord.getMatType());
             System.out.println("获取的评审id： "+evalRecord.getJudgeId());
             System.out.println("获取的学年： "+evalRecord.getAcYear());
+            evalRecord.setJudgeCardId(faculty.getCardId());
+            evalRecord.setStuCardId(student.getCardId());
+            evalRecord.setStuName(student.getName());
             List<EvalRecord> evalRecords=evalRecordMapper.getEvalRecord(evalRecord.getMatType(), evalRecord.getJudgeId(), evalRecord.getAcYear());
             for(EvalRecord ev:evalRecords){
                 System.out.println(ev);
