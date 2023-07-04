@@ -12,6 +12,9 @@
         <result property="score" column="score" />
         <result property="eval_time" column="evalTime" />
         <result property="remark" column="remark" />
+        <result property="stuCardId" column="stu_card_id" />
+        <result property="judgeCardId" column="judge_card_id" />
+        <result property="stuName" column="stu_name" />
     </resultMap>
 
 <!--    <insert id="insertEvalRecord" parameterType="com.babybus.common.model.EvalRecord">
@@ -25,8 +28,8 @@
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO eval_records (stu_id, judge_id, ac_year, mat_type, eval_status, score, eval_time, remark)
-        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{score}, CURRENT_TIMESTAMP, #{remark})
+        INSERT INTO eval_records (stu_id, judge_id, ac_year, mat_type, eval_status, score, eval_time, remark, stu_card_id, stu_name, judge_card_id)
+        VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{score}, CURRENT_TIMESTAMP, #{remark}, #{stuCardId}, #{stuName}, #{judgeCardId})
     </insert>
 
 
@@ -44,7 +47,10 @@
         eval_status = #{evalStatus},
         score = #{score},
         eval_time = CURRENT_TIMESTAMP,
-        remark = #{remark}
+        remark = #{remark},
+        stu_card_id = #{stuCardId},
+        stu_name = #{stuName},
+        judge_card_id = #{judgeCardId}
         WHERE id = #{id}
     </update>
 
