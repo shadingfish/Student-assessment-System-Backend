@@ -5,6 +5,7 @@ import com.babybus.common.mapper.EvalResultMapper;
 import com.babybus.common.model.EvalRecord;
 import com.babybus.common.model.EvalResult;
 import com.babybus.wangdy55.mapper.VolunteerRecordMapper;
+import com.babybus.wangdy55.model.DTO.EvalRecordDto;
 import com.babybus.wangdy55.model.DTO.VolunteerRecordDto;
 import com.babybus.wangdy55.service.VolunteerRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,24 +26,24 @@ public class VolunteerRecordServiceImpl implements VolunteerRecordService {
         return volunteerRecordMapper.getVolunteerRecordList();
     }
 
-    public Integer updateVolunteerRecord(VolunteerRecordDto record) {
+    public Integer updateVolunteerRecord(EvalRecordDto recordDto) {
         // 查询综合评分结果表，是否有当前学生（cardId）、当前学年的志愿活动记录
-        EvalResult evalResult = evalResultMapper.getEvalResult(record.getStuId(), "2022-2023");
+        EvalResult evalResult = evalResultMapper.getEvalResult(recordDto.getStuId(), "2022-2023");
         // 若有，则更新该记录的个人总结评分
         if (evalResult != null) {
-            evalResult.setReportScore(record.getScore());
+            evalResult.setReportScore(recordDto.getScore());
             evalResultMapper.updateEvalResult(evalResult);
         }
         // 若没有，则创建新记录，并更新的个人总结评分
         else {
             EvalResult newEvalResult = new EvalResult();
-            newEvalResult.setStuId(record.getStuId());
+            newEvalResult.setStuId(recordDto.getStuId());
             newEvalResult.setAcYear("2022-2023");
-            newEvalResult.setReportScore(record.getScore());
+            newEvalResult.setReportScore(recordDto.getScore());
             evalResultMapper.insertEvalResult(newEvalResult);
         }
         // 更新个人总结的状态和评分
-        return volunteerRecordMapper.updateVolunteerRecord(record);
+        return volunteerRecordMapper.updateVolunteerRecord(recordDto);
     }
 
     public Integer submitVolunteerRecord(Integer stuId) {
