@@ -1,4 +1,5 @@
-# This is not Dingyi Yu's branch
+This repository is moved from https://gitee.com/yudingyi054/sce-back/tree/yudingyi/
+## The "master branch" is not Dingyi Yu's branch
 ## Frontend: https://github.com/shadingfish/Student-assessment-System-Frontend/tree/yudingyi
 # Student-assessment-System-Backend
 Student Quality assessment and Reporting system (SQR)
