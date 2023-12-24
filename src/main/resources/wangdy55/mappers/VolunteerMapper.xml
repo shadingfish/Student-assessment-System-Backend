@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.wangdy55.mapper.VolunteerMapper">
+    <resultMap id="VolunteerActivityResultMap" type="com.babybus.common.model.material.VolunteerActivity" extends="materialResultMap">
+        <result column="activity_time" property="activityTime"/>
+        <result column="activity_name" property="activityName"/>
+        <result column="depart" property="depart"/>
+        <result column="duration" property="duration"/>
+    </resultMap>
+    <resultMap id="materialResultMap" type="com.babybus.common.model.material.Material">
+        <id column="id" property="id" />
+        <result column="stu_id" property="stuId" />
+        <result column="ac_year" property="acYear" />
+        <result column="file_url" property="fileUrl" />
+        <result column="submit_time" property="submitTime" />
+    </resultMap>
+
+    <insert id="insertVolunteerActivity" useGeneratedKeys="true" parameterType="com.babybus.common.model.material.VolunteerActivity">
+        <!-- Set the generated keys to the id property -->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO volunteer_activities (
+            stu_id, ac_year, file_url,
+            activity_time, activity_name, depart, duration)
+        VALUES (#{stuId}, #{acYear}, #{fileUrl},
+            #{activityTime}, #{activityName}, #{depart}, #{duration})
+    </insert>
+
+    <select id="getVolunteerActivityList" resultType="com.babybus.common.model.material.VolunteerActivity" resultMap="VolunteerActivityResultMap">
+        SELECT * FROM volunteer_activities WHERE stu_id = #{stuId} AND ac_year = #{acYear} AND deleted != 1
+    </select>
+
+    <select id="getVolunteerActivityById" resultType="com.babybus.common.model.material.VolunteerActivity" resultMap="VolunteerActivityResultMap">
+        SELECT * FROM volunteer_activities WHERE id = #{id}
+    </select>
+
+<!--    <update id="updateVolunteerActivity" parameterType="com.babybus.common.model.material.VolunteerActivity">-->
+<!--        UPDATE volunteer_activities-->
+<!--        SET file_url = #{fileUrl},-->
+<!--            politic_sum = #{politicSum}, behave_sum = #{behaveSum}, study_sum = #{studySum}, health_sum = #{healthSum}-->
+<!--        WHERE id = #{matId}-->
+<!--    </update>-->
+
+    <delete id="deleteVolunteerActivityById" parameterType="int">
+        UPDATE volunteer_activities
+        SET deleted = 1
+        WHERE id = #{id}
+    </delete>
+</mapper>

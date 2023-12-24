@@ -4,9 +4,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+<<<<<<< HEAD
 ### Maven ###
 .mvn
 
+=======
+>>>>>>> 2799d0301bb63194b91e43201c38dd5205cdda9a
 ### STS ###
 .apt_generated
 .classpath

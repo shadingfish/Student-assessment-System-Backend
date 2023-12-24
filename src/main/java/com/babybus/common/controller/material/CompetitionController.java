@@ -2,7 +2,10 @@ package com.babybus.common.controller.material;
 
 import com.babybus.common.model.CommonResult;
 import com.babybus.common.model.material.Competition;
+import com.babybus.common.model.user.Student;
+import com.babybus.common.service.StudentService;
 import com.babybus.common.service.material.CompetitionService;
+import com.babybus.yudingyi.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,23 @@ import java.util.List;
 public class CompetitionController {
     @Autowired
     private CompetitionService competitionService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private StudentService studentService;
 
     @ApiOperation("插入竞赛获奖记录")
     @PostMapping("/insert")
-    public CommonResult<?> insertCompetition(@RequestBody Competition competition) {
+    public CommonResult<?> insertCompetition(@RequestBody Competition competition,@RequestHeader("Authorization") String token) {
         try {
+            String cardId=jwtTokenUtil.getUsernameFromToken(token);
+            competition.setCardId(cardId);
+            Student student=studentService.getStudentByCardId(cardId);
+            competition.setStuId(student.getId());
+            competition.setEvalStatus("待审核");
+            competition.setMatType("竞赛获奖");
+            System.out.println(competition);
+
             // 将用户信息保存到数据库
             Integer affected = competitionService.insertCompetition(competition);
             if (affected == 0) {
@@ -35,9 +50,21 @@ public class CompetitionController {
 
     @ApiOperation("获取竞赛获奖记录列表")
     @GetMapping("/get-list")
-    public CommonResult<?> getCompetitionList(@RequestParam Integer stuId) {
+    public CommonResult<?> getCompetitionList(@RequestHeader("Authorization")String token) {
         try {
-            List<Competition> competitionList = competitionService.getCompetitionList(stuId);
+            String card_id=jwtTokenUtil.getUsernameFromToken(token);
+            List<Competition> competitionList = competitionService.getCompetitionListByCardId(card_id);
+            return CommonResult.success(competitionList, "获取成功");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return CommonResult.error(500,"获取失败");
+        }
+    }
+
+    @GetMapping("/get-list-by-cardId")
+    public CommonResult<?> getCompetitionListByCardId(@RequestParam String card_id) {
+        try {
+            List<Competition> competitionList = competitionService.getCompetitionListByCardId(card_id);
             return CommonResult.success(competitionList, "获取成功");
         } catch (Exception e) {
             System.out.println(e.toString());

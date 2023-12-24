@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.yudingyi.mapper.ResearchMapper">
+    <resultMap id="researchResultMap" type="com.babybus.yudingyi.model.Research">
+        <!-- 手动映射父类的属性 -->
+        <result column="id" property="id"/>
+        <result column="stu_id" property="stuId"/>
+        <result column="card_id" property="cardId"/>
+        <result column="ac_year" property="acYear"/>
+        <result column="mat_type" property="matType"/>
+        <result column="file_url" property="fileUrl"/>
+        <result column="submit_time" property="submitTime"/>
+        <!-- 手动映射子类特有的属性 -->
+        <result column="file_name" property="fileName"/>
+        <result column="output_name" property="outputName"/>
+        <result column="output_type" property="outputType"/>
+        <result column="category" property="category"/>
+        <result column="description" property="description"/>
+        <result column="output_time" property="outputTime"/>
+    </resultMap>
+
+
+<!--    <insert id="storeResReq" parameterType="com.babybus.yudingyi.model.Research">-->
+<!--        INSERT INTO research_achievements (stu_id, card_id, ac_year, mat_type, output_name, output_type, category, description, output_time, file_name, file_url)-->
+<!--        VALUES (#{stuId}, #{cardId}, #{acYear}, #{matType}, #{outputName}, #{outputType}, #{category}, #{description}, #{outputTime}, #{fileName}, #{fileUrl})-->
+<!--    </insert>-->
+
+<!--    <insert id="storeResReq" parameterType="com.babybus.yudingyi.model.Research">-->
+<!--        <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">-->
+<!--            SELECT id FROM research_achievements WHERE id = #{id}-->
+<!--        </selectKey>-->
+<!--        <if test="id != null">-->
+<!--            UPDATE research_achievements-->
+<!--            SET stu_id = #{stuId}, card_id = #{cardId}, ac_year = #{acYear}, mat_type = #{matType},-->
+<!--            output_name = #{outputName}, output_type = #{outputType}, category = #{category},-->
+<!--            description = #{description}, output_time = #{outputTime}, file_name = #{fileName}, file_url = #{fileUrl}-->
+<!--            WHERE id = #{id}-->
+<!--        </if>-->
+<!--        <if test="id == null">-->
+<!--            INSERT INTO research_achievements (stu_id, card_id, ac_year, mat_type, output_name, output_type, category, description, output_time, file_name, file_url)-->
+<!--            VALUES (#{stuId}, #{cardId}, #{acYear}, #{matType}, #{outputName}, #{outputType}, #{category}, #{description}, #{outputTime}, #{fileName}, #{fileUrl})-->
+<!--        </if>-->
+<!--    </insert>-->
+
+    <insert id="storeResReq" parameterType="com.babybus.yudingyi.model.Research">
+        INSERT INTO research_achievements (stu_id, card_id, ac_year, mat_type, output_name, output_type, category, description, output_time, file_name, file_url)
+        VALUES (#{stuId}, #{cardId}, #{acYear}, #{matType}, #{outputName}, #{outputType}, #{category}, #{description}, #{outputTime}, #{fileName}, #{fileUrl})
+            ON DUPLICATE KEY UPDATE
+            stu_id = VALUES(stu_id),
+            card_id = VALUES(card_id),
+            ac_year = VALUES(ac_year),
+            mat_type = VALUES(mat_type),
+            output_name = VALUES(output_name),
+            output_type = VALUES(output_type),
+            category = VALUES(category),
+            description = VALUES(description),
+            output_time = VALUES(output_time),
+            file_name = VALUES(file_name),
+            file_url = VALUES(file_url)
+    </insert>
+
+
+    <select id="checkResearch" resultType="com.babybus.yudingyi.model.DTO.Check">
+        SELECT e.ac_year, e.score, e.eval_status, s.id, s.card_id, s.name, s.school, s.grade, s.major
+        FROM eval_records e
+                 JOIN students s ON e.stu_card_id = s.card_id
+        WHERE e.judge_id = #{id}
+    </select>
+
+    <select id="getResearchList" parameterType="int" resultMap="researchResultMap">
+        SELECT * FROM research_achievements WHERE stu_id = #{stu_id}
+    </select>
+
+    <select id="getById" parameterType="int" resultMap="researchResultMap">
+        SELECT * FROM research_achievements WHERE id = #{id}
+    </select>
+
+    <delete id="deleteResearch" parameterType="int">
+        DELETE FROM research_achievements WHERE id = #{id}
+    </delete>
+
+    <update id="giveResearchScore" parameterType="int">
+        UPDATE eval_results
+        SET research_score = #{research_score}
+        WHERE stu_id = #{stu_id}
+    </update>
+
+</mapper>

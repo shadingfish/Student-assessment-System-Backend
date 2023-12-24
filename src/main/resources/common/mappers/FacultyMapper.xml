@@ -7,30 +7,27 @@
         <result property="job" column="job"/>
     </resultMap>
 
-    <resultMap id="userResultMap" type="com.babybus.common.model.user.User">
+    <resultMap id="userResultMap" type="com.babybus.common.model.user.BaseUser">
         <id property="id" column="id"/>
         <result property="cardId" column="card_id"/>
         <result property="name" column="name"/>
-        <!--        <result property="chara" column="chara" javaType="com.babybus.common.model.user.User$Chara"/>-->
-        <result property="chara" column="chara"/>
+        <result property="role" column="role"/>
+        <result property="roleId" column="role_id"/>
         <result property="password" column="password"/>
-        <!--        <result property="status" column="status" javaType="com.babybus.common.model.user.User$Status"/>-->
         <result property="status" column="status"/>
         <result property="birthday" column="birthday"/>
-        <!--        <result property="gender" column="gender" javaType="com.babybus.common.model.user.User$Gender"/>-->
         <result property="gender" column="gender"/>
         <result property="phone" column="phone"/>
         <result property="email" column="email"/>
     </resultMap>
 
-    <insert id="insertFaculty" parameterType="com.babybus.common.model.user.Faculty">
-        <!-- 将生成的 id 字段值，更新到对象的 id 属性 -->
+    <insert id="insertFaculty" parameterType="com.babybus.common.model.user.Faculty" useGeneratedKeys="true">
+        <!-- 将生成的 user_id 字段值，更新到对象的 userId 属性 -->
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO faculties (id, card_id, name, chara, password, status, birthday, gender, phone, email, depart, job)
-<!--        VALUES (#{id}, #{cardId}, #{name}, #{chara.value}, #{password}, #{status.value}, #{birthday}, #{gender.value}, #{phone}, #{email}, #{depart}, #{job})-->
-        VALUES (#{id}, #{cardId}, #{name}, #{chara}, #{password}, #{status}, #{birthday}, #{gender}, #{phone}, #{email}, #{depart}, #{job})
+        INSERT INTO faculties (id, card_id, name, role, role_id, password, status, birthday, gender, phone, email, depart, job)
+        VALUES (#{id}, #{cardId}, #{name}, #{role}, #{roleId}, #{password}, #{status}, #{birthday}, #{gender}, #{phone}, #{email}, #{depart}, #{job})
     </insert>
 
     <select id="getFacultyList" resultType="com.babybus.common.model.user.Faculty" resultMap="facultyResultMap">
@@ -44,22 +41,27 @@
         WHERE id = #{id}
     </select>
 
-    <select id="getFacultyByCardId" resultType="com.babybus.common.model.user.Faculty" resultMap="facultyResultMap">
+    <select id="getFacultyByCardId" resultMap="facultyResultMap">
         SELECT *
         FROM faculties
         WHERE card_id = #{cardId}
+    </select>
+
+    <select id="getFacultyByRole" resultMap="facultyResultMap">
+        SELECT *
+        FROM faculties
+        WHERE role = #{role}
     </select>
 
     <update id="updateFaculty" parameterType="com.babybus.common.model.user.Faculty">
         UPDATE faculties
         SET card_id = #{cardId},
             name = #{name},
-            chara = #{chara},
+            role = #{role},
+            role_id = #{roleId},
             password = #{password},
-<!--            status = #{status.value},-->
             status = #{status},
             birthday = #{birthday},
-<!--            gender = #{gender.value},-->
             gender = #{gender},
             phone = #{phone},
             email = #{email},
@@ -74,4 +76,16 @@
         FROM faculties
         WHERE id = #{id}
     </delete>
+
+    <select id="listFacultyPage" resultType="com.babybus.common.model.user.Faculty" resultMap="facultyResultMap">
+        SELECT *
+        FROM faculties
+                 LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="countFaculty" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM faculties
+    </select>
+
 </mapper>

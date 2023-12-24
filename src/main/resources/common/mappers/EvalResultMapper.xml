@@ -19,20 +19,20 @@
     </resultMap>
 
     <insert id="insertEvalResult" parameterType="com.babybus.common.model.EvalResult">
-        INSERT INTO eval_result (stu_id, card_id, ac_year, scholarship, eval_status, gpa_score, report_score, volun_score, occup_score, research_score, award_score, practice_score)
+        INSERT INTO eval_results (stu_id, card_id, ac_year, scholarship, eval_status, gpa_score, report_score, volun_score, occup_score, research_score, award_score, practice_score)
         VALUES (#{stuId}, #{cardId}, #{acYear}, #{scholarship}, #{evalStatus}, #{gpaScore}, #{reportScore}, #{volunScore}, #{occupScore}, #{researchScore}, #{awardScore}, #{practiceScore})
     </insert>
 
     <select id="getEvalResultList" resultType="com.babybus.common.model.EvalResult" resultMap="EvalResultResultMap">
-        SELECT * FROM eval_result WHERE scholarship = #{scholarship} AND ac_year = #{acYear}
+        SELECT * FROM eval_results WHERE scholarship = #{scholarship} AND ac_year = #{acYear}
     </select>
 
     <select id="getEvalResult" resultType="com.babybus.common.model.EvalResult" resultMap="EvalResultResultMap">
-        SELECT * FROM eval_result WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+        SELECT * FROM eval_results WHERE stu_id = #{stuId} AND ac_year = #{acYear}
     </select>
 
     <update id="updateEvalResult" parameterType="com.babybus.common.model.EvalResult">
-        UPDATE eval_result
+        UPDATE eval_results
         SET card_id = #{cardId}, scholarship = #{scholarship}, eval_status = #{evalStatus}, gpa_score = #{gpaScore}, report_score = #{reportScore},
             volun_score = #{volunScore}, occup_score = #{occupScore}, research_score = #{researchScore}, award_score = #{awardScore},
             practice_score = #{practiceScore}
@@ -40,6 +40,6 @@
     </update>
 
     <delete id="deleteEvalResult">
-        DELETE FROM eval_result WHERE stu_id = #{stuId} AND ac_year = #{acYear}
+        DELETE FROM eval_results WHERE stu_id = #{stuId} AND ac_year = #{acYear}
     </delete>
 </mapper>

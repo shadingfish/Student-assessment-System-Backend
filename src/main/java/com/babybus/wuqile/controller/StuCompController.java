@@ -26,7 +26,7 @@ public class StuCompController {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=new Date();
         Timestamp sqlDate=new Timestamp(date.getTime());
-        stucom.setEvalTime(sqlDate);
+//        stucom.setEvalTime(sqlDate);
         System.out.println(stucom.toString());
         stucommapper.ViewerInsert(stucom);
         return CommonResult.success(stucom,"insert successful");

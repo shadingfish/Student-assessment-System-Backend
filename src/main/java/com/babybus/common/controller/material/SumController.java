@@ -1,7 +1,7 @@
 package com.babybus.common.controller.material;
 
 import com.babybus.common.model.CommonResult;
-import com.babybus.common.model.material.Sum;
+import com.babybus.common.model.material.Summary;
 import com.babybus.common.service.material.SumService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,10 +19,10 @@ public class SumController {
 
     @ApiOperation("插入个人学年总结")
     @PostMapping("/insert")
-    public CommonResult<?> insertSummary(@RequestBody Sum sum) {
+    public CommonResult<?> insertSummary(@RequestBody Summary summary) {
         try {
             // 将用户信息保存到数据库
-            Integer affected = sumService.insertSummary(sum);
+            Integer affected = sumService.insertSummary(summary);
             if (affected == 0) {
                 return CommonResult.error(200,"插入失败");
             }
@@ -37,8 +37,8 @@ public class SumController {
     @GetMapping("/get-list")
     public CommonResult<?> getSummaryList(@RequestParam Integer stuId) {
         try {
-            List<Sum> sumList = sumService.getSummaryList(stuId);
-            return CommonResult.success(sumList, "获取成功");
+            List<Summary> summaryList = sumService.getSummaryList(stuId);
+            return CommonResult.success(summaryList, "获取成功");
         } catch (Exception e) {
             System.out.println(e.toString());
             return CommonResult.error(500,"获取失败");
@@ -49,9 +49,9 @@ public class SumController {
     @GetMapping("/get")
     public CommonResult<?> getSummary(@RequestParam Integer matId) {
         try {
-            Sum sum = sumService.getSummaryById(matId);
-            if (sum != null) {
-                return CommonResult.success(sum, "获取成功");
+            Summary summary = sumService.getSummaryById(matId);
+            if (summary != null) {
+                return CommonResult.success(summary, "获取成功");
             } else {
                 return CommonResult.error(200,"找不到该记录");
             }
@@ -64,9 +64,9 @@ public class SumController {
 
     @ApiOperation("更新个人学年总结")
     @PutMapping("/update")
-    public CommonResult<?> updateSummary(@RequestBody Sum sum) {
+    public CommonResult<?> updateSummary(@RequestBody Summary summary) {
         try {
-            Integer affected = sumService.updateSummary(sum);
+            Integer affected = sumService.updateSummary(summary);
             if (affected == 0) {
                 return CommonResult.error(200,"更新失败");
             }

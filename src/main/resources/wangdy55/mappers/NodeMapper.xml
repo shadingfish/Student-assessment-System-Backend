@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.babybus.wangdy55.mapper.NodeMapper">
+<!--    <resultMap id="nodeResultMap" type="com.babybus.wangdy55.model.Node">-->
+<!--        <result column="name" property="name" />-->
+<!--        <result column="path" property="path" />-->
+<!--    </resultMap>-->
+
+    <select id="getNode" resultType="int">
+        SELECT COUNT(*)
+        FROM nodes
+        WHERE nodes.path = #{path}
+    </select>
+
+    <select id="checkNode" resultType="boolean">
+        SELECT (COUNT(*) > 0)
+        FROM nodes JOIN node_role ON nodes.id = node_role.node_id
+        WHERE node_role.role_id IN (
+            SELECT role_user.role_id
+            FROM role_user
+            WHERE role_user.card_id = #{cardId}
+        ) AND nodes.path = #{path};
+    </select>
+</mapper>

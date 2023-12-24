@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.babybus.common.mapper.material.SumMapper">
-    <resultMap id="summaryResultMap" type="com.babybus.common.model.material.Sum">
+    <resultMap id="summaryResultMap" type="com.babybus.common.model.material.Summary">
         <!-- 手动映射父类的属性 -->
         <result column="mat_id" property="matId"/>
         <result column="stu_id" property="stuId"/>
@@ -21,27 +21,27 @@
         <result column="health_sum" property="healthSum"/>
     </resultMap>
 
-    <insert id="insertSummary" parameterType="com.babybus.common.model.material.Sum">
+    <insert id="insertSummary" parameterType="com.babybus.common.model.material.Summary">
         <!-- Set the generated keys to the matId property -->
         <selectKey keyProperty="matId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO sum (stu_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
+        INSERT INTO summary (stu_id, judge_id, ac_year, mat_type, eval_status, remark, file_url, submit_time, eval_time,
             politic_sum, behave_sum, study_sum, health_sum)
         VALUES (#{stuId}, #{judgeId}, #{acYear}, #{matType}, #{evalStatus}, #{remark}, #{fileUrl}, #{submitTime}, #{evalTime},
             #{politicSum}, #{behaveSum}, #{studySum}, #{healthSum})
     </insert>
 
-    <select id="getSummaryById" resultType="com.babybus.common.model.material.Sum" resultMap="summaryResultMap">
-        SELECT * FROM sum WHERE mat_id = #{matId}
+    <select id="getSummaryById" resultType="com.babybus.common.model.material.Summary" resultMap="summaryResultMap">
+        SELECT * FROM summary WHERE mat_id = #{matId}
     </select>
 
-    <select id="getSummaryList" resultType="com.babybus.common.model.material.Sum" resultMap="summaryResultMap">
-        SELECT * FROM sum WHERE stu_id = #{stuId}
+    <select id="getSummaryList" resultType="com.babybus.common.model.material.Summary" resultMap="summaryResultMap">
+        SELECT * FROM summary WHERE stu_id = #{stuId}
     </select>
 
-    <update id="updateSummary" parameterType="com.babybus.common.model.material.Sum">
-        UPDATE sum SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear},
+    <update id="updateSummary" parameterType="com.babybus.common.model.material.Summary">
+        UPDATE summary SET stu_id = #{stuId}, ac_year = #{acYear}, judge_id = #{judgeId}, ac_year = #{acYear},
             mat_type = #{matType}, eval_status = #{evalStatus}, remark = #{remark}, file_url = #{fileUrl},
             submit_time = #{submitTime}, eval_time = #{evalTime},
             politic_sum = #{politicSum}, behave_sum = #{behaveSum}, study_sum = #{studySum}, health_sum = #{healthSum}
@@ -49,6 +49,6 @@
     </update>
 
     <delete id="deleteSummaryById" parameterType="int">
-        DELETE FROM sum WHERE mat_id = #{matId}
+        DELETE FROM summary WHERE mat_id = #{matId}
     </delete>
 </mapper>

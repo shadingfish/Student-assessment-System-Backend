@@ -3,6 +3,7 @@ package com.babybus.common.mapper;
 import com.babybus.common.model.user.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface StudentMapper {
     Student getStudentByCardId(String cardId);
     Integer updateStudent(Student student);
     Integer deleteStudentById(Integer userId);
+
+     List<Student> listStudentPage(Integer start, Integer pageSize);
+
+     Long countStudent();
 }
