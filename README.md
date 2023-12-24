@@ -1,7 +1,6 @@
+This repository is moved from https://gitee.com/yudingyi054/sce-back/tree/yudingyi/
 # Student-assessment-System-Backend
 Student Quality assessment and Reporting system (SQR)
-
-This repository is moved from https://gitee.com/yudingyi054/sce-back/tree/yudingyi/
 ## Frontend: https://github.com/shadingfish/Student-assessment-System-Frontend/tree/yudingyi
 
 ![image](https://github.com/shadingfish/Student-assessment-System-Backend/assets/112749262/fa9f57b3-fdfc-4a4b-a339-da0451fcacac)
